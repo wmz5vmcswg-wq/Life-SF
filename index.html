@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>FIDIUM | Control Ejecutivo</title>
+    <title>FALCÓN OS | Personal & Business Operating System</title>
     
     <!-- PWA & Apple Web App Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="FIDIUM OS">
-    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-title" content="FALCÓN OS">
+    <meta name="theme-color" content="#090A0C">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,11 +19,12 @@
             theme: {
                 extend: {
                     colors: {
-                        pitch: '#080808',
-                        card: '#121214',
-                        border: '#27272A',
-                        accentRed: '#DC2626',
-                        accentRedHover: '#B91C1C',
+                        carbon: '#111214',
+                        deep: '#090A0C',
+                        graphite: '#202226',
+                        warmWhite: '#F4F2ED',
+                        gold: '#B99A62',
+                        goldHover: '#A68754',
                         subtle: '#A1A1AA'
                     },
                     fontFamily: {
@@ -37,16 +38,16 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
-            background-color: #000000;
-            color: #F4F4F5;
+            background-color: #090A0C;
+            color: #F4F2ED;
             -webkit-tap-highlight-color: transparent;
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
         }
-        .glass-card {
-            background: rgba(18, 18, 20, 0.85);
+        .glass-panel {
+            background: rgba(17, 18, 20, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(185, 154, 98, 0.15);
         }
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
@@ -57,279 +58,355 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between pb-28 pt-8 px-4 sm:px-8 max-w-2xl sm:max-w-4xl mx-auto relative select-none">
+<body class="h-screen flex overflow-hidden select-none">
 
-    <!-- HEADER / PROFILE -->
-    <header class="flex justify-between items-center mb-6 border-b border-border pb-4">
-        <div>
-            <p class="text-xs font-semibold text-accentRed uppercase tracking-widest" id="live-date">Cargando fecha...</p>
-            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-0.5">FIDIUM <span class="text-accentRed">Legal OS</span></h1>
-        </div>
-        <div class="flex items-center gap-3">
-            <button onclick="exportToAppleCalendar()" class="p-2.5 rounded-full glass-card text-accentRed hover:bg-accentRed/10 transition active:scale-95" title="Sincronizar Apple Calendar">
-                <i data-lucide="calendar"></i>
-            </button>
-            <div class="w-10 h-10 rounded-full border border-accentRed/40 flex items-center justify-center font-bold text-sm bg-card text-accentRed shadow-lg shadow-accentRed/20">
-                FD
-            </div>
-        </div>
-    </header>
-
-    <!-- NAVIGATION TABS -->
-    <nav class="flex gap-2 overflow-x-auto hide-scrollbar mb-6 pb-1">
-        <button onclick="switchTab('dashboard')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-accentRed bg-accentRed text-white transition shrink-0" data-tab="dashboard">
-            Dashboard General
-        </button>
-        <button onclick="switchTab('clients')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-border bg-card text-subtle transition shrink-0" data-tab="clients">
-            Clientes & Pagos
-        </button>
-        <button onclick="switchTab('projects')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-border bg-card text-subtle transition shrink-0" data-tab="projects">
-            Proyectos & Servicios
-        </button>
-        <button onclick="switchTab('journal')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-border bg-card text-subtle transition shrink-0" data-tab="journal">
-            Diario de Ideas
-        </button>
-    </nav>
-
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="flex-1 space-y-6">
-
-        <!-- TAB 1: DASHBOARD -->
-        <div id="tab-dashboard" class="space-y-6 tab-content">
-            <!-- Summary Metric Card -->
-            <div class="glass-card rounded-3xl p-6 border border-border shadow-xl">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <span class="text-xs text-subtle font-medium">Estado del Negocio</span>
-                        <h2 class="text-xl font-bold text-white mt-0.5" id="summary-status">Control Activo</h2>
-                    </div>
-                    <div class="p-2 rounded-xl bg-accentRed/10 text-accentRed">
-                        <i data-lucide="shield-check" class="w-6 h-6"></i>
-                    </div>
+    <!-- BARRA LATERAL EJECUTIVA (DESKTOP & RESPONSIVE) -->
+    <aside id="sidebar" class="w-64 flex flex-col border-r border-graphite bg-carbon transition-all duration-300 z-30 shrink-0">
+        <div class="p-5 flex items-center justify-between border-b border-graphite">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-bold text-sm shadow-lg shadow-gold/10">
+                    F
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 border-t border-border">
-                    <div>
-                        <span class="text-[11px] text-subtle">Clientes Totales</span>
-                        <p class="text-lg font-bold text-white" id="stat-clients">0</p>
-                    </div>
-                    <div>
-                        <span class="text-[11px] text-subtle">Proyectos Activos</span>
-                        <p class="text-lg font-bold text-white" id="stat-projects">0</p>
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <span class="text-[11px] text-subtle">Pagos Pendientes</span>
-                        <p class="text-lg font-bold text-accentRed" id="stat-pending">$0.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Agenda & Reminders -->
-            <div class="space-y-3">
-                <div class="flex justify-between items-center px-1">
-                    <h3 class="text-xs font-semibold tracking-wider text-subtle uppercase">Agenda & Recordatorios Clave</h3>
-                    <button onclick="openModal('reminder')" class="text-xs text-accentRed hover:underline flex items-center gap-1 font-semibold">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Nuevo Recordatorio
-                    </button>
-                </div>
-                <div id="reminders-container" class="space-y-2.5">
-                    <!-- Dinámico -->
+                <div>
+                    <span class="font-bold tracking-wider text-xs block text-warmWhite">FALCÓN OS</span>
+                    <span class="text-[9px] text-gold tracking-widest uppercase">Executive System</span>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 2: CLIENTES Y PAGOS -->
-        <div id="tab-clients" class="space-y-6 tab-content hidden">
-            <div class="flex justify-between items-center px-1">
-                <h3 class="text-xs font-semibold tracking-wider text-subtle uppercase">Base de Datos de Clientes</h3>
-                <button onclick="openModal('client')" class="px-3 py-1.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 flex items-center gap-1">
-                    <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Agregar Cliente
+        <nav id="nav-modules" class="flex-1 overflow-y-auto px-3 py-4 space-y-1 hide-scrollbar">
+            <!-- Inyectado por JS -->
+        </nav>
+
+        <div class="p-4 border-t border-graphite flex items-center gap-3 bg-deep/50">
+            <div class="w-9 h-9 rounded-full bg-graphite border border-gold/40 flex items-center justify-center text-xs font-bold text-gold">
+                SF
+            </div>
+            <div class="overflow-hidden">
+                <p class="text-xs font-medium truncate text-warmWhite">Saúl Falcón V.</p>
+                <p class="text-[10px] text-subtle truncate">Dirección General</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden bg-deep">
+        
+        <!-- HEADER SUPERIOR -->
+        <header class="h-16 border-b border-graphite bg-carbon/80 backdrop-blur-md px-6 flex items-center justify-between z-20 shrink-0">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="text-subtle hover:text-warmWhite p-1.5 rounded-lg bg-graphite/50 transition">
+                    <i data-lucide="menu" class="w-4 h-4"></i>
+                </button>
+                <span id="header-title" class="text-xs font-semibold uppercase tracking-widest text-gold">
+                    Dashboard Ejecutivo
+                </span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="relative hidden sm:block">
+                    <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-subtle"></i>
+                    <input type="text" placeholder="Buscar en sistemas..." class="bg-carbon border border-graphite rounded-xl pl-9 pr-4 py-1.5 text-xs text-warmWhite focus:outline-none focus:border-gold w-64">
+                </div>
+                <button onclick="triggerQuickAddModal()" class="px-3.5 py-1.5 bg-gold text-deep font-semibold text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1.5 shadow-lg shadow-gold/20">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Captura Rápida
                 </button>
             </div>
-            <div id="clients-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <!-- Dinámico -->
-            </div>
-        </div>
+        </header>
 
-        <!-- TAB 3: PROYECTOS Y SERVICIOS -->
-        <div id="tab-projects" class="space-y-6 tab-content hidden">
-            <div class="flex justify-between items-center px-1">
-                <h3 class="text-xs font-semibold tracking-wider text-subtle uppercase">Seguimiento de Servicios & Proyectos</h3>
-                <button onclick="openModal('project')" class="px-3 py-1.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 flex items-center gap-1">
-                    <i data-lucide="folder-plus" class="w-3.5 h-3.5"></i> Nuevo Proyecto
-                </button>
-            </div>
-            <div id="projects-container" class="space-y-3">
-                <!-- Dinámico -->
-            </div>
-        </div>
+        <!-- ÁREA DE CONTENIDO DINÁMICO -->
+        <main id="main-content" class="flex-1 overflow-y-auto p-6 space-y-6">
+            <!-- Contenido renderizado por JS según el módulo activo -->
+        </main>
+    </div>
 
-        <!-- TAB 4: DIARIO DE IDEAS -->
-        <div id="tab-journal" class="space-y-4 tab-content hidden">
-            <div class="flex justify-between items-center px-1">
-                <h3 class="text-xs font-semibold tracking-wider text-subtle uppercase">Libreta de Ideas & Notas Rápidas</h3>
-                <span class="text-[11px] text-subtle">Guardado automático</span>
-            </div>
-            <div class="glass-card rounded-2xl p-4 border border-border">
-                <textarea id="journal-input" oninput="saveJournal()" placeholder="Escribe aquí ideas de negocio, estrategias legales, apuntes o reflexiones rápidas..." class="w-full h-64 bg-transparent border-none text-sm text-white focus:outline-none resize-none"></textarea>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- MODAL GENERAL -->
+    <!-- MODAL DE CAPTURA RÁPIDA / ACCIÓN -->
     <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card w-full max-w-md rounded-3xl p-6 border border-border space-y-4">
+        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 border border-graphite space-y-4">
             <div class="flex justify-between items-center">
-                <h3 id="modal-title" class="text-lg font-bold text-white">Nuevo Registro</h3>
-                <button onclick="closeModal()" class="text-subtle hover:text-white">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+                <h3 id="modal-title" class="text-sm font-bold uppercase tracking-wider text-warmWhite">Captura Estratégica</h3>
+                <button onclick="closeModal()" class="text-subtle hover:text-warmWhite"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            
-            <form id="dynamic-form" onsubmit="handleFormSubmit(event)" class="space-y-3">
-                <!-- Los campos se cargan dinámicamente -->
-            </form>
+            <div id="modal-body" class="space-y-3">
+                <!-- Formulario dinámico -->
+            </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT APP ENGINE -->
+    <!-- MOTOR JAVASCRIPT DE FALCÓN OS -->
     <script>
-        // Default State for FIDIUM Legal Startup
+        // Estructura de Módulos del Sistema
+        const modules = [
+            { id: 'dashboard', name: 'Dashboard', icon: 'layout-dashboard' },
+            { id: 'objectives', name: 'Objetivos', icon: 'target' },
+            { id: 'ideas', name: 'Ideas y Oportunidades', icon: 'lightbulb' },
+            { id: 'projects', name: 'Proyectos', icon: 'briefcase' },
+            { id: 'finances', name: 'Finanzas', icon: 'dollar-sign' },
+            { id: 'calendar', name: 'Calendario', icon: 'calendar' },
+            { id: 'crm', name: 'CRM y Networking', icon: 'users' },
+            { id: 'academy', name: 'Academia', icon: 'book-open' },
+            { id: 'brand', name: 'Marca Personal', icon: 'award' },
+            { id: 'habits', name: 'Hábitos y Rendimiento', icon: 'activity' },
+            { id: 'documents', name: 'Documentos', icon: 'file-text' },
+            { id: 'ai', name: 'Director Estratégico IA', icon: 'bot' }
+        ];
+
+        // Estado inicial persistente
         const defaultState = {
-            activeTab: 'dashboard',
-            modalType: null,
-            reminders: [
-                { id: 'r1', title: 'Revisión de contratos iniciales - Cliente A', time: '10:00 AM', done: false },
-                { id: 'r2', title: 'Seguimiento registro de marca INAPI/IMPI', time: '04:00 PM', done: false }
+            activeModule: 'dashboard',
+            sidebarOpen: true,
+            priorities: [
+                { id: 1, text: 'Cierre de contratos y registros corporativos FIDIUM', status: 'pending', area: 'FIDIUM' },
+                { id: 2, text: 'Alineación de estrategia institucional CGE 2026', status: 'in-progress', area: 'CGE' },
+                { id: 3, text: 'Optimización de cadena logística Reyno Boots', status: 'pending', area: 'Empresas' }
             ],
-            clients: [
-                { id: 'c1', name: 'Empresa Alfa S.A.', service: 'Constitución Legal', amount: '$4,500 MXN', status: 'Pagado', phone: '+52 477 000 0000' }
+            ideas: [
+                { id: 1, name: 'Plataforma automatizada de contratos transfronterizos MX-CL', category: 'Legal Tech', potential: '$150,000 MXN', status: 'En evaluación' }
             ],
             projects: [
-                { id: 'p1', title: 'Registro de Marca Comercial', client: 'Empresa Alfa S.A.', status: 'En Proceso', deadline: '2026-11-20' }
+                { id: 1, title: 'Registro Marcas INAPI/IMPI', client: 'FIDIUM Direct', budget: '$25,000 MXN', status: 'Activo' }
             ],
-            journal: ''
+            finances: {
+                cashflow: 142500,
+                income: 185000,
+                expenses: 42500
+            },
+            contacts: [
+                { id: 1, name: 'Ingrid', company: 'Equinix Chile', role: 'Infraestructura', sector: 'Tecnología' }
+            ],
+            academy: [
+                { id: 1, course: 'Responsabilidad Extracontractual', institution: 'Universidad Andrés Bello', progress: '85%' }
+            ],
+            habits: [
+                { id: 1, name: 'Entrenamiento de fuerza (06:00 AM)', streak: 18, done: true },
+                { id: 2, name: 'Lectura y análisis jurídico', streak: 12, done: false }
+            ],
+            aiChat: [
+                { sender: 'ai', text: 'Saludos, Saúl. Sistemas operativos sincronizados. He analizado las cargas de FIDIUM y el CGE. ¿Qué directriz estratégica ejecutamos hoy?' }
+            ]
         };
 
-        let appState = JSON.parse(localStorage.getItem('fidium_state')) || defaultState;
+        let appState = JSON.parse(localStorage.getItem('falcon_os_state')) || defaultState;
 
         function saveState() {
-            localStorage.setItem('fidium_state', JSON.stringify(appState));
-            render();
+            localStorage.setItem('falcon_os_state', JSON.stringify(appState));
+            renderApp();
         }
 
-        function updateDateDisplay() {
-            const now = new Date();
-            const options = { weekday: 'long', day: 'numeric', month: 'short' };
-            document.getElementById('live-date').innerText = now.toLocaleDateString('es-ES', options);
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            appState.sidebarOpen = !appState.sidebarOpen;
+            sidebar.classList.toggle('w-64', appState.sidebarOpen);
+            sidebar.classList.toggle('w-20', !appState.sidebarOpen);
         }
 
-        function switchTab(tabId) {
-            appState.activeTab = tabId;
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                if(btn.dataset.tab === tabId) {
-                    btn.className = "tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-accentRed bg-accentRed text-white transition shrink-0";
-                } else {
-                    btn.className = "tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-border bg-card text-subtle transition shrink-0";
-                }
-            });
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.add('hidden');
-            });
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            render();
+        function switchModule(modId) {
+            appState.activeModule = modId;
+            renderApp();
         }
 
-        function render() {
-            // Stats
-            document.getElementById('stat-clients').innerText = appState.clients.length;
-            document.getElementById('stat-projects').innerText = appState.projects.length;
-            document.getElementById('stat-pending').innerText = `$${appState.clients.filter(c => c.status === 'Pendiente').length * 2500}.00`;
-            document.getElementById('journal-input').value = appState.journal || '';
+        // Renderizador General de la Aplicación
+        function renderApp() {
+            // Renderizar Navegación Lateral
+            const navContainer = document.getElementById('nav-modules');
+            navContainer.innerHTML = modules.map(m => `
+                <button onclick="switchModule('${m.id}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition ${appState.activeModule === m.id ? 'bg-graphite text-warmWhite border border-gold/30 shadow-sm' : 'text-subtle hover:bg-carbon hover:text-warmWhite'}">
+                    <i data-lucide="${m.icon}" class="w-4 h-4 ${appState.activeModule === m.id ? 'text-gold' : 'text-subtle'}"></i>
+                    <span class="${appState.sidebarOpen ? 'block' : 'hidden md:hidden'}">${m.name}</span>
+                </button>
+            `).join('');
 
-            // Render Reminders
-            const remContainer = document.getElementById('reminders-container');
-            remContainer.innerHTML = appState.reminders.map(r => `
-                <div onclick="toggleReminder('${r.id}')" class="glass-card p-3.5 rounded-2xl flex items-center justify-between border border-border cursor-pointer active:scale-98 transition">
-                    <div class="flex items-center gap-3">
-                        <div class="w-5 h-5 rounded-full border border-accentRed flex items-center justify-center ${r.done ? 'bg-accentRed text-white' : ''}">
-                            ${r.done ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
+            document.getElementById('header-title').innerText = `Módulo: ${modules.find(m => m.id === appState.activeModule)?.name || 'Dashboard'}`;
+
+            // Renderizar Vistas según Módulo Activo
+            const mainContent = document.getElementById('main-content');
+            
+            if (appState.activeModule === 'dashboard') {
+                mainContent.innerHTML = `
+                    <div class="glass-panel rounded-2xl p-6 border border-graphite shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h1 class="text-2xl font-bold tracking-tight text-warmWhite">Centro de Mando Operativo</h1>
+                            <p class="text-xs text-subtle mt-1">Sistemas sincronizados. 3 prioridades principales de ejecución activa.</p>
                         </div>
-                        <span class="text-xs font-medium ${r.done ? 'line-through text-subtle' : 'text-white'}">${r.title}</span>
+                        <div class="px-3.5 py-1.5 rounded-xl bg-graphite border border-gold/30 text-xs font-medium text-gold">
+                            Q4 2026 • Alto Rendimiento
+                        </div>
                     </div>
-                    <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md border border-border text-subtle bg-pitch">${r.time}</span>
-                </div>
-            `).join('');
 
-            // Render Clients
-            const clientContainer = document.getElementById('clients-container');
-            clientContainer.innerHTML = appState.clients.map(c => `
-                <div class="glass-card p-4 rounded-2xl border border-border space-y-2">
-                    <div class="flex justify-between items-start">
-                        <h4 class="text-sm font-bold text-white">${c.name}</h4>
-                        <span class="text-[10px] px-2 py-0.5 rounded font-semibold ${c.status === 'Pagado' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}">${c.status}</span>
-                    </div>
-                    <p class="text-xs text-subtle"><strong class="text-white">Servicio:</strong> ${c.service}</p>
-                    <div class="flex justify-between items-center pt-2 border-t border-border text-xs">
-                        <span class="text-accentRed font-semibold">${c.amount}</span>
-                        <button onclick="deleteClient('${c.id}')" class="text-subtle hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                    </div>
-                </div>
-            `).join('');
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div class="glass-panel rounded-2xl p-5 border border-graphite space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-xs font-semibold uppercase tracking-wider text-subtle">Prioridades Estratégicas (Top 3)</h3>
+                                    <span class="text-xs text-gold">Regla de Ejecución</span>
+                                </div>
+                                <div class="space-y-2.5">
+                                    ${appState.priorities.map((p, idx) => `
+                                        <div class="flex items-center justify-between p-3.5 rounded-xl bg-deep border border-graphite">
+                                            <div class="flex items-center gap-3">
+                                                <span class="w-5 h-5 rounded-full bg-graphite flex items-center justify-center text-[10px] font-bold text-gold">${idx + 1}</span>
+                                                <span class="text-xs font-medium text-warmWhite">${p.text}</span>
+                                            </div>
+                                            <span class="text-[10px] px-2 py-0.5 rounded-md bg-carbon border border-graphite text-subtle">${p.area}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
 
-            // Render Projects
-            const projContainer = document.getElementById('projects-container');
-            projContainer.innerHTML = appState.projects.map(p => `
-                <div class="glass-card p-4 rounded-2xl border border-border flex items-center justify-between">
-                    <div>
-                        <h4 class="text-sm font-bold text-white">${p.title}</h4>
-                        <p class="text-xs text-subtle mt-0.5">Cliente: ${p.client} • Vence: ${p.deadline}</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="glass-panel rounded-2xl p-4 border border-graphite">
+                                    <p class="text-[10px] uppercase text-subtle font-semibold">Flujo de Caja Neto</p>
+                                    <p class="text-lg font-bold text-warmWhite mt-1">$${appState.finances.cashflow.toLocaleString()} MXN</p>
+                                    <span class="text-[10px] text-emerald-400 mt-1 block">Balance positivo consolidado</span>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-4 border border-graphite">
+                                    <p class="text-[10px] uppercase text-subtle font-semibold">Proyectos Activos</p>
+                                    <p class="text-lg font-bold text-warmWhite mt-1">${appState.projects.length} En Curso</p>
+                                    <span class="text-[10px] text-gold mt-1 block">FIDIUM & Empresas</span>
+                                </div>
+                                <div class="glass-panel rounded-2xl p-4 border border-graphite">
+                                    <p class="text-[10px] uppercase text-subtle font-semibold">Hábitos Diarios</p>
+                                    <p class="text-lg font-bold text-warmWhite mt-1">18 Días Racha</p>
+                                    <span class="text-[10px] text-emerald-400 mt-1 block">Disciplina constante</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel rounded-2xl p-5 border border-gold/30 flex flex-col justify-between space-y-4">
+                            <div>
+                                <div class="flex items-center gap-2 text-gold mb-3">
+                                    <i data-lucide="bot" class="w-5 h-5"></i>
+                                    <h3 class="text-xs font-semibold uppercase tracking-wider">Director Estratégico IA</h3>
+                                </div>
+                                <p class="text-xs text-subtle leading-relaxed">
+                                    "La tracción en FIDIUM avanza de acuerdo con los plazos previstos. Se recomienda revisar los compromisos institucionales de la semana para evitar cruces con los módulos académicos en Chile."
+                                </p>
+                            </div>
+                            <button onclick="switchModule('ai')" class="w-full py-2.5 bg-graphite hover:bg-graphite/80 border border-gold/40 rounded-xl text-xs font-semibold text-warmWhite transition flex items-center justify-center gap-2">
+                                Abrir Consola IA <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-gold"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-[10px] px-2.5 py-1 rounded-lg bg-accentRed/10 text-accentRed font-semibold border border-accentRed/20">${p.status}</span>
-                        <button onclick="deleteProject('${p.id}')" class="text-subtle hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                `;
+            } else if (appState.activeModule === 'ideas') {
+                mainContent.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-sm font-bold uppercase tracking-wider text-warmWhite">Banco de Ideas y Oportunidades</h2>
+                            <button onclick="openModal('idea')" class="px-3 py-1.5 bg-gold text-deep font-semibold text-xs rounded-xl hover:bg-goldHover transition">Nueva Idea</button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${appState.ideas.map(i => `
+                                <div class="glass-panel p-4 rounded-2xl border border-graphite space-y-2">
+                                    <div class="flex justify-between items-start">
+                                        <h4 class="text-sm font-bold text-warmWhite">${i.name}</h4>
+                                        <span class="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20">${i.status}</span>
+                                    </div>
+                                    <p class="text-xs text-subtle">Categoría: ${i.category}</p>
+                                    <p class="text-xs text-gold font-semibold">Potencial: ${i.potential}</p>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            } else if (appState.activeModule === 'projects') {
+                mainContent.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-sm font-bold uppercase tracking-wider text-warmWhite">Gestor de Proyectos</h2>
+                            <button onclick="openModal('project')" class="px-3 py-1.5 bg-gold text-deep font-semibold text-xs rounded-xl hover:bg-goldHover transition">Nuevo Proyecto</button>
+                        </div>
+                        <div class="space-y-3">
+                            ${appState.projects.map(p => `
+                                <div class="glass-panel p-4 rounded-2xl border border-graphite flex justify-between items-center">
+                                    <div>
+                                        <h4 class="text-sm font-bold text-warmWhite">${p.title}</h4>
+                                        <p class="text-xs text-subtle mt-0.5">Cliente: ${p.client} • Presupuesto: ${p.budget}</p>
+                                    </div>
+                                    <span class="text-[10px] px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">${p.status}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (appState.activeModule === 'finances') {
+                mainContent.innerHTML = `
+                    <div class="space-y-4">
+                        <h2 class="text-sm font-bold uppercase tracking-wider text-warmWhite">Centro Financiero Consolidado</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="glass-panel p-4 rounded-2xl border border-graphite">
+                                <span class="text-xs text-subtle">Ingresos Totales</span>
+                                <p class="text-xl font-bold text-emerald-400 mt-1">$${appState.finances.income.toLocaleString()} MXN</p>
+                            </div>
+                            <div class="glass-panel p-4 rounded-2xl border border-graphite">
+                                <span class="text-xs text-subtle">Gastos Operativos</span>
+                                <p class="text-xl font-bold text-red-400 mt-1">$${appState.finances.expenses.toLocaleString()} MXN</p>
+                            </div>
+                            <div class="glass-panel p-4 rounded-2xl border border-graphite">
+                                <span class="text-xs text-subtle">Flujo Neto</span>
+                                <p class="text-xl font-bold text-gold mt-1">$${appState.finances.cashflow.toLocaleString()} MXN</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (appState.activeModule === 'ai') {
+                mainContent.innerHTML = `
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="flex items-center gap-2 pb-2 border-b border-graphite">
+                            <i data-lucide="bot" class="w-5 h-5 text-gold"></i>
+                            <h2 class="text-sm font-bold uppercase tracking-wider text-warmWhite">Director Estratégico IA</h2>
+                        </div>
+                        <div id="chat-stream" class="flex-1 overflow-y-auto space-y-3 pr-2">
+                            ${appState.aiChat.map(msg => `
+                                <div class="flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}">
+                                    <div class="max-w-md p-3.5 rounded-2xl text-xs leading-relaxed ${msg.sender === 'user' ? 'bg-gold text-deep font-medium' : 'glass-panel text-warmWhite border border-graphite'}">
+                                        ${msg.text}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="flex gap-2 pt-2">
+                            <input type="text" id="ai-input" placeholder="Consulte al Director IA sobre finanzas, proyectos o estrategia..." class="flex-1 bg-carbon border border-graphite rounded-xl px-4 py-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                            <button onclick="sendAIChat()" class="px-5 py-2.5 bg-gold text-deep font-semibold text-xs rounded-xl hover:bg-goldHover transition">Enviar</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                mainContent.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-center space-y-3">
+                        <div class="w-12 h-12 rounded-2xl glass-panel flex items-center justify-center text-gold">
+                            <i data-lucide="layers" class="w-6 h-6"></i>
+                        </div>
+                        <h2 class="text-lg font-bold capitalize text-warmWhite">Módulo ${appState.activeModule}</h2>
+                        <p class="text-xs text-subtle max-w-sm">Estructura operativa inicializada y conectada al núcleo de FALCÓN OS.</p>
+                    </div>
+                `;
+            }
 
             lucide.createIcons();
         }
 
-        // Modals Handler
+        // Control de Modales y Formularios
         function openModal(type) {
-            appState.modalType = type;
             document.getElementById('modal-backdrop').classList.remove('hidden');
             const titleEl = document.getElementById('modal-title');
-            const formEl = document.getElementById('dynamic-form');
+            const bodyEl = document.getElementById('modal-body');
 
-            if(type === 'reminder') {
-                titleEl.innerText = 'Nuevo Recordatorio';
-                formEl.innerHTML = `
-                    <div><label class="text-xs text-subtle block mb-1">Título</label><input type="text" id="m-title" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
-                    <div><label class="text-xs text-subtle block mb-1">Hora</label><input type="text" id="m-time" placeholder="Ej: 09:00 AM" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
-                    <button type="submit" class="w-full py-2.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 mt-2">Guardar Recordatorio</button>
+            if (type === 'idea') {
+                titleEl.innerText = 'Registrar Nueva Idea';
+                bodyEl.innerHTML = `
+                    <input type="text" id="idea-name" placeholder="Nombre de la idea..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="idea-cat" placeholder="Categoría (Ej: Legal Tech)..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="idea-pot" placeholder="Potencial económico..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <button onclick="saveNewIdea()" class="w-full py-2.5 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Idea</button>
                 `;
-            } else if(type === 'client') {
-                titleEl.innerText = 'Registrar Cliente';
-                formEl.innerHTML = `
-                    <div><label class="text-xs text-subtle block mb-1">Nombre del Cliente / Empresa</label><input type="text" id="c-name" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
-                    <div><label class="text-xs text-subtle block mb-1">Servicio Legal Prestado</label><input type="text" id="c-service" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div><label class="text-xs text-subtle block mb-1">Monto ($)</label><input type="text" id="c-amount" placeholder="$0.00" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
-                        <div><label class="text-xs text-subtle block mb-1">Estatus Pago</label><select id="c-status" class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"><option value="Pagado">Pagado</option><option value="Pendiente">Pendiente</option></select></div>
-                    </div>
-                    <button type="submit" class="w-full py-2.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 mt-2">Guardar Cliente</button>
-                `;
-            } else if(type === 'project') {
-                titleEl.innerText = 'Nuevo Proyecto / Asesoría';
-                formEl.innerHTML = `
-                    <div><label class="text-xs text-subtle block mb-1">Nombre del Proyecto / Trámite</label><input type="text" id="p-title" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
-                    <div><label class="text-xs text-subtle block mb-1">Cliente Asociado</label><input type="text" id="p-client" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div><label class="text-xs text-subtle block mb-1">Estatus</label><select id="p-status" class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"><option value="En Proceso">En Proceso</option><option value="Completado">Completado</option></select></div>
-                        <div><label class="text-xs text-subtle block mb-1">Fecha Límite</label><input type="date" id="p-deadline" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
-                    </div>
-                    <button type="submit" class="w-full py-2.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 mt-2">Guardar Proyecto</button>
+            } else if (type === 'project') {
+                titleEl.innerText = 'Registrar Nuevo Proyecto';
+                bodyEl.innerHTML = `
+                    <input type="text" id="proj-title" placeholder="Título del proyecto..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="proj-client" placeholder="Cliente o área..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="proj-budget" placeholder="Presupuesto ($)..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <button onclick="saveNewProject()" class="w-full py-2.5 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Proyecto</button>
                 `;
             }
         }
@@ -338,76 +415,40 @@
             document.getElementById('modal-backdrop').classList.add('hidden');
         }
 
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            if(appState.modalType === 'reminder') {
-                appState.reminders.push({
-                    id: 'r_' + Date.now(),
-                    title: document.getElementById('m-title').value,
-                    time: document.getElementById('m-time').value,
-                    done: false
-                });
-            } else if(appState.modalType === 'client') {
-                appState.clients.push({
-                    id: 'c_' + Date.now(),
-                    name: document.getElementById('c-name').value,
-                    service: document.getElementById('c-service').value,
-                    amount: document.getElementById('c-amount').value,
-                    status: document.getElementById('c-status').value
-                });
-            } else if(appState.modalType === 'project') {
-                appState.projects.push({
-                    id: 'p_' + Date.now(),
-                    title: document.getElementById('p-title').value,
-                    client: document.getElementById('p-client').value,
-                    status: document.getElementById('p-status').value,
-                    deadline: document.getElementById('p-deadline').value
-                });
-            }
+        function saveNewIdea() {
+            const name = document.getElementById('idea-name').value;
+            const category = document.getElementById('idea-cat').value;
+            const potential = document.getElementById('idea-pot').value;
+            if(!name) return;
+            appState.ideas.push({ id: Date.now(), name, category, potential, status: 'Nueva' });
             saveState();
             closeModal();
         }
 
-        function toggleReminder(id) {
-            const rem = appState.reminders.find(r => r.id === id);
-            if(rem) rem.done = !rem.done;
+        function saveNewProject() {
+            const title = document.getElementById('proj-title').value;
+            const client = document.getElementById('proj-client').value;
+            const budget = document.getElementById('proj-budget').value;
+            if(!title) return;
+            appState.projects.push({ id: Date.now(), title, client, budget, status: 'Activo' });
             saveState();
+            closeModal();
         }
 
-        function deleteClient(id) {
-            appState.clients = appState.clients.filter(c => c.id !== id);
+        function sendAIChat() {
+            const input = document.getElementById('ai-input');
+            const text = input.value.trim();
+            if(!text) return;
+            appState.aiChat.push({ sender: 'user', text });
+            appState.aiChat.push({ sender: 'ai', text: `Análisis estratégico recibido para: "${text}". Mis métricas confirman viabilidad operativa. Sugiero enfocar recursos en la priorización actual.` });
+            input.value = '';
             saveState();
+            const stream = document.getElementById('chat-stream');
+            if(stream) stream.scrollTop = stream.scrollHeight;
         }
 
-        function deleteProject(id) {
-            appState.projects = appState.projects.filter(p => p.id !== id);
-            saveState();
-        }
-
-        function saveJournal() {
-            appState.journal = document.getElementById('journal-input').value;
-            localStorage.setItem('fidium_state', JSON.stringify(appState));
-        }
-
-        function exportToAppleCalendar() {
-            let icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//FIDIUM OS//SF//ES\n";
-            appState.projects.forEach(p => {
-                icsContent += `BEGIN:VEVENT\nSUMMARY:FIDIUM: ${p.title} (${p.client})\nDESCRIPTION:Proyecto legal activo\nEND:VEVENT\n`;
-            });
-            icsContent += "END:VCALENDAR";
-
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.setAttribute('download', 'fidium_agenda.ics');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // Init
-        updateDateDisplay();
-        render();
+        // Inicialización
+        renderApp();
     </script>
 </body>
 </html>
