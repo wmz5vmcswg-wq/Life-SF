@@ -40,7 +40,7 @@
     </script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Chart.js para gráficas interactivas -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -64,7 +64,7 @@
             display: inline-block;
             white-space: nowrap;
             padding-left: 100%;
-            animation: ticker 30s linear infinite;
+            animation: ticker 35s linear infinite;
         }
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
@@ -74,15 +74,15 @@
 </head>
 <body class="h-screen flex flex-col overflow-hidden select-none">
 
-    <!-- TICKER SUPERIOR TIPO BLOOMBERG (VERÍDICO Y ÚTIL) -->
-    <div class="bg-carbon border-b border-graphite py-1.5 px-4 text-[11px] font-mono text-subtle flex items-center justify-between shrink-0">
+    <!-- TICKER SUPERIOR CON PROVERBIO DE ÁGUILAS -->
+    <div class="bg-carbon border-b border-graphite py-1.5 px-4 text-[11px] font-mono text-gold flex items-center justify-between shrink-0">
         <div class="ticker-wrap flex-1 mr-4">
-            <div class="ticker-move" id="ticker-feed">
-                <!-- Inyectado dinámicamente -->
+            <div class="ticker-move">
+                <span>⚡ "El águila vuela sola a gran altura y por encima de las tormentas; imítala para alcanzar el éxito supremo." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🦅 "Visualiza tu meta con precisión implacable, mantén la disciplina y ejecuta con la fuerza de un líder." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🎯 FALCÓN OS // SISTEMA DE DIRECCIÓN EJECUTIVA</span>
             </div>
         </div>
-        <div class="hidden sm:flex items-center gap-4 text-xs font-mono shrink-0 pl-4 border-l border-graphite">
-            <span class="text-terminalGreen">● LIVE TERMINAL</span>
+        <div class="hidden sm:flex items-center gap-4 text-xs font-mono shrink-0 pl-4 border-l border-graphite text-subtle">
+            <span class="text-terminalGreen">● LIVE</span>
             <span id="live-clock" class="text-gold">00:00:00</span>
         </div>
     </div>
@@ -104,8 +104,8 @@
 
             <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
                 <button onclick="switchView('ideas')" id="nav-ideas" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition bg-graphite text-warmWhite border border-gold/30 shadow-sm">
-                    <i data-lucide="lightbulb" class="w-4 h-4 text-gold"></i>
-                    <span>Matriz de Ideas</span>
+                    <i data-lucide="book-open" class="w-4 h-4 text-gold"></i>
+                    <span>Diario de Ideas</span>
                 </button>
                 <button onclick="switchView('projects')" id="nav-projects" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition text-subtle hover:bg-carbon hover:text-warmWhite">
                     <i data-lucide="briefcase" class="w-4 h-4 text-subtle"></i>
@@ -127,11 +127,11 @@
         <!-- CONTENEDOR PRINCIPAL -->
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden bg-deep">
             
-            <!-- HEADER DE NAVEGACIÓN -->
+            <!-- HEADER -->
             <header class="h-16 border-b border-graphite bg-carbon/80 backdrop-blur-md px-6 flex items-center justify-between z-20 shrink-0">
                 <div class="flex items-center gap-4">
                     <span id="header-title" class="text-xs font-mono uppercase tracking-widest text-gold font-bold">
-                        // MATRIZ DE EVALUACIÓN DE IDEAS
+                        // DIARIO DE IDEAS Y APUNTES
                     </span>
                 </div>
 
@@ -142,14 +142,14 @@
                 </div>
             </header>
 
-            <!-- ÁREA DE CONTENIDO PRINCIPAL -->
+            <!-- ÁREA DE CONTENIDO -->
             <main id="main-content" class="flex-1 overflow-y-auto p-6 space-y-6">
                 <!-- Inyectado por JS -->
             </main>
         </div>
     </div>
 
-    <!-- MODAL GENERAL ESTILO TERMINAL CON DESPLEGABLES -->
+    <!-- MODAL CON TEXTOS EN NEGRO CLARO PARA PERFECTA VISIBILIDAD -->
     <div id="modal-backdrop" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="terminal-panel w-full max-w-lg rounded-3xl p-6 border border-graphite space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-graphite pb-3">
@@ -157,19 +157,17 @@
                 <button onclick="closeModal()" class="text-subtle hover:text-warmWhite"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div id="modal-body" class="space-y-3 font-mono">
-                <!-- Formulario desplegable -->
+                <!-- Formulario -->
             </div>
         </div>
     </div>
 
-    <!-- MOTOR JAVASCRIPT & CHART.JS -->
+    <!-- MOTOR JAVASCRIPT -->
     <script>
         const defaultState = {
             activeView: 'ideas',
             ideas: [
-                { id: 1, name: 'Automatización de Contratos Transfronterizos', category: 'Legal Tech / FIDIUM', viability: 9, impact: 9, complexity: 5, status: 'En Evaluación' },
-                { id: 2, name: 'Red de Distribución Digital Reyno Boots USA', category: 'Corporativo / Comercio', viability: 7, impact: 8, complexity: 7, status: 'Aprobada' },
-                { id: 3, name: 'Manual de Cumplimiento Normativo ISO Impeweb', category: 'Estrategia / Operaciones', viability: 8, impact: 6, complexity: 4, status: 'En Evaluación' }
+                { id: 1, title: 'Estructura de contratos digitales para FIDIUM', category: 'FIDIUM Legal Tech', content: 'Desarrollar una plantilla automatizada para clientes corporativos internacionales en México y Chile.', date: '2026-11-06' }
             ],
             projects: [
                 { id: 1, title: 'Registro Marcas INAPI / IMPI', client: 'FIDIUM Legal', status: 'En Proceso' },
@@ -179,34 +177,17 @@
             ]
         };
 
-        let appState = JSON.parse(localStorage.getItem('falcon_terminal_v2')) || defaultState;
+        let appState = JSON.parse(localStorage.getItem('falcon_terminal_v3')) || defaultState;
         let activeChart = null;
 
         function saveState() {
-            localStorage.setItem('falcon_terminal_v2', JSON.stringify(appState));
+            localStorage.setItem('falcon_terminal_v3', JSON.stringify(appState));
             renderApp();
         }
 
         function switchView(view) {
             appState.activeView = view;
             renderApp();
-        }
-
-        // Ticker informativo dinámico
-        function updateTickerFeed() {
-            const totalProjects = appState.projects.length;
-            const completed = appState.projects.filter(p => p.status === 'Concluido').length;
-            const pending = appState.projects.filter(p => p.status === 'Pendiente' || p.status === 'Iniciado').length;
-
-            document.getElementById('ticker-feed').innerHTML = `
-                <span>
-                    🟢 <strong>TIPO DE CAMBIO MXN/CLP:</strong> Estacional | 
-                    ⚖️ <strong>FIDIUM LEGAL:</strong> Trámites INAPI / IMPI Activos | 
-                    📊 <strong>PROYECTOS:</strong> ${totalProjects} Totales (${completed} Concluidos, ${pending} Activos) | 
-                    💡 <strong>BANCO DE IDEAS:</strong> ${appState.ideas.length} Oportunidades en Evaluación | 
-                    ⚡ <strong>ESTADO OPERATIVO:</strong> 100% Sincronizado
-                </span>
-            `;
         }
 
         setInterval(() => {
@@ -216,76 +197,42 @@
         }, 1000);
 
         function renderApp() {
-            updateTickerFeed();
             const isIdeas = appState.activeView === 'ideas';
             
             document.getElementById('nav-ideas').className = `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition ${isIdeas ? 'bg-graphite text-warmWhite border border-gold/30 shadow-sm' : 'text-subtle hover:bg-carbon hover:text-warmWhite'}`;
             document.getElementById('nav-projects').className = `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition ${!isIdeas ? 'bg-graphite text-warmWhite border border-gold/30 shadow-sm' : 'text-subtle hover:bg-carbon hover:text-warmWhite'}`;
 
-            document.getElementById('header-title').innerText = isIdeas ? '// MATRIZ DE EVALUACIÓN DE IDEAS' : '// PIPELINE DE CONTROL DE PROYECTOS';
+            document.getElementById('header-title').innerText = isIdeas ? '// DIARIO DE IDEAS Y APUNTES' : '// PIPELINE DE CONTROL DE PROYECTOS';
             document.getElementById('btn-modal-text').innerText = isIdeas ? 'NUEVA IDEA' : 'NUEVO PROYECTO';
 
             const mainContent = document.getElementById('main-content');
 
             if (isIdeas) {
-                const avgViability = (appState.ideas.reduce((a, b) => a + b.viability, 0) / (appState.ideas.length || 1)).toFixed(1);
-                const avgImpact = (appState.ideas.reduce((a, b) => a + b.impact, 0) / (appState.ideas.length || 1)).toFixed(1);
-
                 mainContent.innerHTML = `
-                    <!-- METRICAS DE IDEAS -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono mb-2">
                         <div class="terminal-panel p-4 rounded-2xl border border-graphite">
-                            <span class="text-[10px] text-subtle uppercase">Promedio Viabilidad</span>
-                            <p class="text-xl font-bold text-terminalGreen mt-1">${avgViability} / 10</p>
-                            <span class="text-[10px] text-terminalGreen mt-1 block">▲ Factibilidad Técnica</span>
+                            <span class="text-[10px] text-subtle uppercase">Notas Registradas</span>
+                            <p class="text-xl font-bold text-gold mt-1">${appState.ideas.length} Apuntes</p>
+                            <span class="text-[10px] text-terminalGreen mt-1 block">Diario activo sin restricciones</span>
                         </div>
                         <div class="terminal-panel p-4 rounded-2xl border border-graphite">
-                            <span class="text-[10px] text-subtle uppercase">Impacto Estratégico</span>
-                            <p class="text-xl font-bold text-gold mt-1">${avgImpact} / 10</p>
-                            <span class="text-[10px] text-gold mt-1 block">★ Retorno Estratégico</span>
-                        </div>
-                        <div class="terminal-panel p-4 rounded-2xl border border-graphite">
-                            <span class="text-[10px] text-subtle uppercase">Ideas Evaluadas</span>
-                            <p class="text-xl font-bold text-warmWhite mt-1">${appState.ideas.length} Oportunidades</p>
-                            <span class="text-[10px] text-subtle mt-1 block">Matriz Activa</span>
+                            <span class="text-[10px] text-subtle uppercase">Enfoque Actual</span>
+                            <p class="text-xl font-bold text-warmWhite mt-1">Visión de Águila</p>
+                            <span class="text-[10px] text-subtle mt-1 block">Estrategia & Negocios</span>
                         </div>
                     </div>
 
-                    <!-- GRÁFICA DE RADAR (SPIDER CHART) PARA IDEAS -->
-                    <div class="terminal-panel p-5 rounded-2xl border border-graphite space-y-3">
-                        <div class="flex justify-between items-center font-mono text-xs">
-                            <span class="text-gold uppercase tracking-wider">// Perfil Comparativo: Viabilidad vs Impacto vs Complejidad</span>
-                            <span class="text-subtle">Gráfica Interactiva</span>
-                        </div>
-                        <div class="h-64 relative">
-                            <canvas id="ideasRadarChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- TARJETAS DE IDEAS -->
+                    <!-- TARJETAS DE DIARIO DE IDEAS -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         ${appState.ideas.map(i => `
                             <div class="terminal-panel p-5 rounded-2xl border border-graphite space-y-3 flex flex-col justify-between">
                                 <div class="space-y-2">
                                     <div class="flex justify-between items-start">
-                                        <h4 class="text-sm font-bold text-warmWhite">${i.name}</h4>
-                                        <span class="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20 font-mono">${i.status}</span>
+                                        <h4 class="text-sm font-bold text-warmWhite">${i.title}</h4>
+                                        <span class="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20 font-mono">${i.date}</span>
                                     </div>
-                                    <p class="text-xs text-subtle font-mono">Categoría: ${i.category}</p>
-                                    <div class="grid grid-cols-3 gap-2 text-center pt-2 font-mono text-[11px]">
-                                        <div class="bg-carbon p-2 rounded-xl border border-graphite">
-                                            <span class="text-subtle block text-[9px]">Viabilidad</span>
-                                            <strong class="text-terminalGreen">${i.viability}/10</strong>
-                                        </div>
-                                        <div class="bg-carbon p-2 rounded-xl border border-graphite">
-                                            <span class="text-subtle block text-[9px]">Impacto</span>
-                                            <strong class="text-gold">${i.impact}/10</strong>
-                                        </div>
-                                        <div class="bg-carbon p-2 rounded-xl border border-graphite">
-                                            <span class="text-subtle block text-[9px]">Complejidad</span>
-                                            <strong class="text-terminalRed">${i.complexity}/10</strong>
-                                        </div>
-                                    </div>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-carbon border border-graphite text-subtle font-mono block w-max">${i.category}</span>
+                                    <p class="text-xs text-subtle leading-relaxed pt-1 font-sans">${i.content}</p>
                                 </div>
                                 <div class="flex justify-end pt-3 border-t border-graphite">
                                     <button onclick="deleteIdea(${i.id})" class="text-subtle hover:text-terminalRed p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
@@ -294,38 +241,31 @@
                         `).join('')}
                     </div>
                 `;
-
-                setTimeout(() => renderIdeasRadarChart(), 50);
-
             } else {
                 const countPend = appState.projects.filter(p => p.status === 'Pendiente').length;
                 const countInit = appState.projects.filter(p => p.status === 'Iniciado' || p.status === 'En Proceso').length;
                 const countDone = appState.projects.filter(p => p.status === 'Concluido').length;
 
                 mainContent.innerHTML = `
-                    <!-- METRICAS DE PROYECTOS -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
                         <div class="terminal-panel p-4 rounded-2xl border border-graphite">
                             <span class="text-[10px] text-subtle uppercase">Proyectos Pendientes</span>
                             <p class="text-xl font-bold text-terminalRed mt-1">${countPend} Por Iniciar</p>
-                            <span class="text-[10px] text-terminalRed mt-1 block">En Cola de Espera</span>
                         </div>
                         <div class="terminal-panel p-4 rounded-2xl border border-graphite">
                             <span class="text-[10px] text-subtle uppercase">En Ejecución</span>
                             <p class="text-xl font-bold text-gold mt-1">${countInit} En Curso</p>
-                            <span class="text-[10px] text-gold mt-1 block">Desarrollo Activo</span>
                         </div>
                         <div class="terminal-panel p-4 rounded-2xl border border-graphite">
                             <span class="text-[10px] text-subtle uppercase">Concluidos</span>
                             <p class="text-xl font-bold text-terminalGreen mt-1">${countDone} Finalizados</p>
-                            <span class="text-[10px] text-terminalGreen mt-1 block">Resultados Entregados</span>
                         </div>
                     </div>
 
-                    <!-- GRÁFICA DE BARRAS POR ESTATUS -->
+                    <!-- GRÁFICA DE BARRAS DE PROYECTOS -->
                     <div class="terminal-panel p-5 rounded-2xl border border-graphite space-y-3">
                         <div class="flex justify-between items-center font-mono text-xs">
-                            <span class="text-gold uppercase tracking-wider">// Distribución de Proyectos por Estatus de Avance</span>
+                            <span class="text-gold uppercase tracking-wider">// Distribución de Proyectos por Estatus</span>
                             <span class="text-subtle">Gráfica Interactiva</span>
                         </div>
                         <div class="h-64 relative">
@@ -367,35 +307,6 @@
             }
         }
 
-        // Gráfica de Radar para Ideas (Spider Chart)
-        function renderIdeasRadarChart() {
-            const ctx = document.getElementById('ideasRadarChart');
-            if(!ctx) return;
-            if(activeChart) activeChart.destroy();
-            
-            activeChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: appState.ideas.map(i => i.name.substring(0, 15) + '...'),
-                    datasets: [
-                        { label: 'Viabilidad (1-10)', data: appState.ideas.map(i => i.viability), backgroundColor: '#10B981', borderRadius: 4 },
-                        { label: 'Impacto (1-10)', data: appState.ideas.map(i => i.impact), backgroundColor: '#C5A059', borderRadius: 4 },
-                        { label: 'Complejidad (1-10)', data: appState.ideas.map(i => i.complexity), backgroundColor: '#EF4444', borderRadius: 4 }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#9CA3AF', font: { family: 'monospace', size: 10 } } } },
-                    scales: {
-                        x: { ticks: { color: '#9CA3AF', font: { family: 'monospace', size: 10 } }, grid: { color: '#1C1E24' } },
-                        y: { max: 10, ticks: { color: '#9CA3AF', font: { family: 'monospace', size: 10 } }, grid: { color: '#1C1E24' } }
-                    }
-                }
-            });
-        }
-
-        // Gráfica de Barras por Estatus de Proyectos
         function renderProjectsBarChart() {
             const ctx = document.getElementById('projectsBarChart');
             if(!ctx) return;
@@ -427,7 +338,7 @@
             });
         }
 
-        // Modales con Opciones Seleccionables (Dropdowns)
+        // Modales con texto negro puro sobre fondo claro para visibilidad perfecta
         function openModal() {
             document.getElementById('modal-backdrop').classList.remove('hidden');
             const titleEl = document.getElementById('modal-title');
@@ -435,13 +346,13 @@
             const isIdeas = appState.activeView === 'ideas';
 
             if (isIdeas) {
-                titleEl.innerText = '// REGISTRAR NUEVA IDEA';
+                titleEl.innerText = '// NUEVA IDEA O APUNTE';
                 bodyEl.innerHTML = `
-                    <label class="text-[10px] text-subtle uppercase block">Nombre de la Idea</label>
-                    <input type="text" id="idea-name" placeholder="Ej: Plataforma de gestión jurídica..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold mb-2">
+                    <label class="text-[10px] text-subtle uppercase block">Título de la Idea</label>
+                    <input type="text" id="idea-title" placeholder="Ej: Estrategia de expansión..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
                     
-                    <label class="text-[10px] text-subtle uppercase block">Categoría Estratégica</label>
-                    <select id="idea-cat" class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold mb-2">
+                    <label class="text-[10px] text-subtle uppercase block">Categoría</label>
+                    <select id="idea-cat" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
                         <option value="FIDIUM Legal Tech">FIDIUM Legal Tech</option>
                         <option value="CGE / Institucional">CGE / Institucional</option>
                         <option value="Reyno Boots Corporativo">Reyno Boots Corporativo</option>
@@ -450,37 +361,19 @@
                         <option value="Desarrollo Académico">Desarrollo Académico</option>
                     </select>
 
-                    <div class="grid grid-cols-3 gap-2 mb-2">
-                        <div>
-                            <label class="text-[9px] text-subtle uppercase block">Viabilidad (1-10)</label>
-                            <select id="idea-viab" class="w-full bg-carbon border border-graphite rounded-xl p-2 text-xs text-warmWhite focus:outline-none focus:border-gold">
-                                ${[10,9,8,7,6,5,4,3,2,1].map(n => `<option value="${n}">${n}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-[9px] text-subtle uppercase block">Impacto (1-10)</label>
-                            <select id="idea-imp" class="w-full bg-carbon border border-graphite rounded-xl p-2 text-xs text-warmWhite focus:outline-none focus:border-gold">
-                                ${[10,9,8,7,6,5,4,3,2,1].map(n => `<option value="${n}">${n}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-[9px] text-subtle uppercase block">Complejidad (1-10)</label>
-                            <select id="idea-comp" class="w-full bg-carbon border border-graphite rounded-xl p-2 text-xs text-warmWhite focus:outline-none focus:border-gold">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<option value="${n}">${n}</option>`).join('')}
-                            </select>
-                        </div>
-                    </div>
+                    <label class="text-[10px] text-subtle uppercase block">Descripción / Apunte Rápido</label>
+                    <textarea id="idea-content" rows="4" placeholder="Escribe aquí los detalles del apunte o idea..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2"></textarea>
 
-                    <button onclick="saveIdea()" class="w-full py-2.5 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition">GUARDAR EN MATRIZ</button>
+                    <button onclick="saveIdea()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition">GUARDAR APUNTE</button>
                 `;
             } else {
-                titleEl.innerText = '// REGISTRAR NUEVO PROYECTO';
+                titleEl.innerText = '// NUEVO PROYECTO';
                 bodyEl.innerHTML = `
                     <label class="text-[10px] text-subtle uppercase block">Título del Proyecto</label>
-                    <input type="text" id="proj-title" placeholder="Ej: Renovación de marca corporativa..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold mb-2">
+                    <input type="text" id="proj-title" placeholder="Ej: Auditoría corporativa..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
                     
                     <label class="text-[10px] text-subtle uppercase block">Cliente / Área Responsable</label>
-                    <select id="proj-client" class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold mb-2">
+                    <select id="proj-client" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
                         <option value="FIDIUM Legal">FIDIUM Legal</option>
                         <option value="CGE Institucional">CGE Institucional</option>
                         <option value="Reyno Boots">Reyno Boots</option>
@@ -489,7 +382,7 @@
                     </select>
 
                     <label class="text-[10px] text-subtle uppercase block">Estatus de Avance</label>
-                    <select id="proj-status" class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold mb-2">
+                    <select id="proj-status" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
                         <option value="Pendiente">Pendiente (En Cola)</option>
                         <option value="Iniciado">Iniciado (Fase Inicial)</option>
                         <option value="En Proceso">En Proceso (Ejecución)</option>
@@ -497,7 +390,7 @@
                         <option value="Concluido">Concluido (Finalizado)</option>
                     </select>
 
-                    <button onclick="saveProject()" class="w-full py-2.5 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition">GUARDAR EN PIPELINE</button>
+                    <button onclick="saveProject()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition">GUARDAR PROYECTO</button>
                 `;
             }
         }
@@ -507,14 +400,13 @@
         }
 
         function saveIdea() {
-            const name = document.getElementById('idea-name').value;
+            const title = document.getElementById('idea-title').value;
             const category = document.getElementById('idea-cat').value;
-            const viability = parseInt(document.getElementById('idea-viab').value);
-            const impact = parseInt(document.getElementById('idea-imp').value);
-            const complexity = parseInt(document.getElementById('idea-comp').value);
+            const content = document.getElementById('idea-content').value;
 
-            if(!name) return;
-            appState.ideas.push({ id: Date.now(), name, category, viability, impact, complexity, status: 'En Evaluación' });
+            if(!title) return;
+            const dateStr = new Date().toISOString().split('T')[0];
+            appState.ideas.push({ id: Date.now(), title, category, content: content || 'Sin notas adicionales.', date: dateStr });
             saveState();
             closeModal();
         }
