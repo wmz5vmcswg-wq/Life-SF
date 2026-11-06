@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>FALCÓN OS | Executive Terminal</title>
+    <title>FALCÓN OS | Executive System</title>
     
     <!-- PWA & Apple Web App Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="FALCÓN TERMINAL">
+    <meta name="apple-mobile-web-app-title" content="FALCÓN OS">
     <meta name="theme-color" content="#050507">
 
     <!-- Tailwind CSS CDN -->
@@ -48,9 +48,11 @@
             color: #F4F2ED;
             -webkit-tap-highlight-color: transparent;
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
         .terminal-panel {
-            background: rgba(13, 14, 16, 0.9);
+            background: rgba(13, 14, 16, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(197, 160, 89, 0.2);
@@ -64,7 +66,7 @@
             display: inline-block;
             white-space: nowrap;
             padding-left: 100%;
-            animation: ticker 35s linear infinite;
+            animation: ticker 32s linear infinite;
         }
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
@@ -72,169 +74,147 @@
         }
     </style>
 </head>
-<body class="h-screen flex flex-col overflow-hidden select-none">
+<body class="h-screen flex flex-col justify-between overflow-hidden select-none">
 
     <!-- TICKER SUPERIOR CON PROVERBIO DE ÁGUILAS -->
-    <div class="bg-carbon border-b border-graphite py-1.5 px-4 text-[11px] font-mono text-gold flex items-center justify-between shrink-0">
-        <div class="ticker-wrap flex-1 mr-4">
+    <div class="bg-carbon border-b border-graphite py-2 px-4 text-[11px] font-mono text-gold flex items-center justify-between shrink-0">
+        <div class="ticker-wrap flex-1">
             <div class="ticker-move">
-                <span>⚡ "El águila vuela sola a gran altura y por encima de las tormentas; imítala para alcanzar el éxito supremo." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🦅 "Visualiza tu meta con precisión implacable, mantén la disciplina y ejecuta con la fuerza de un líder." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🎯 FALCÓN OS // SISTEMA DE DIRECCIÓN EJECUTIVA</span>
+                <span>🦅 "El águila vuela sola a gran altura y por encima de las tormentas; imítala para alcanzar el éxito supremo." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; ⚡ "Visualiza tu meta con precisión implacable, mantén la disciplina y ejecuta con la fuerza de un líder." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🎯 FALCÓN OS // FIDIUM • IMPEWEB • REYNO BOOTS</span>
             </div>
-        </div>
-        <div class="hidden sm:flex items-center gap-4 text-xs font-mono shrink-0 pl-4 border-l border-graphite text-subtle">
-            <span class="text-terminalGreen">● LIVE</span>
-            <span id="live-clock" class="text-gold">00:00:00</span>
         </div>
     </div>
 
-    <div class="flex-1 flex overflow-hidden">
-        <!-- BARRA LATERAL EJECUTIVA -->
-        <aside id="sidebar" class="w-64 flex flex-col border-r border-graphite bg-carbon transition-all duration-300 z-30 shrink-0">
-            <div class="p-5 flex items-center justify-between border-b border-graphite">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold text-sm shadow-lg shadow-gold/10 font-mono">
-                        SF
-                    </div>
-                    <div>
-                        <span class="font-bold tracking-wider text-xs block text-warmWhite">FALCÓN OS</span>
-                        <span class="text-[9px] text-gold tracking-widest uppercase font-mono">Strategy Control</span>
-                    </div>
-                </div>
+    <!-- HEADER EJECUTIVO -->
+    <header class="px-5 py-3 border-b border-graphite bg-carbon/90 backdrop-blur-md flex justify-between items-center shrink-0">
+        <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs font-mono">
+                SF
             </div>
-
-            <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-                <button onclick="switchView('ideas')" id="nav-ideas" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition bg-graphite text-warmWhite border border-gold/30 shadow-sm">
-                    <i data-lucide="book-open" class="w-4 h-4 text-gold"></i>
-                    <span>Diario de Ideas</span>
-                </button>
-                <button onclick="switchView('projects')" id="nav-projects" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition text-subtle hover:bg-carbon hover:text-warmWhite">
-                    <i data-lucide="briefcase" class="w-4 h-4 text-subtle"></i>
-                    <span>Pipeline de Proyectos</span>
-                </button>
-            </nav>
-
-            <div class="p-4 border-t border-graphite flex items-center gap-3 bg-deep/50">
-                <div class="w-9 h-9 rounded-full bg-graphite border border-gold/40 flex items-center justify-center text-xs font-bold text-gold font-mono">
-                    SF
-                </div>
-                <div class="overflow-hidden">
-                    <p class="text-xs font-medium truncate text-warmWhite">Saúl Falcón V.</p>
-                    <p class="text-[10px] text-subtle truncate font-mono">FIDIUM & Empresas</p>
-                </div>
+            <div>
+                <h1 class="text-xs font-bold font-mono tracking-wider text-warmWhite">FALCÓN OS</h1>
+                <p class="text-[9px] text-gold font-mono uppercase">Executive System</p>
             </div>
-        </aside>
-
-        <!-- CONTENEDOR PRINCIPAL -->
-        <div class="flex-1 flex flex-col min-w-0 overflow-hidden bg-deep">
-            
-            <!-- HEADER -->
-            <header class="h-16 border-b border-graphite bg-carbon/80 backdrop-blur-md px-6 flex items-center justify-between z-20 shrink-0">
-                <div class="flex items-center gap-4">
-                    <span id="header-title" class="text-xs font-mono uppercase tracking-widest text-gold font-bold">
-                        // DIARIO DE IDEAS Y APUNTES
-                    </span>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <button onclick="openModal()" class="px-4 py-2 bg-gold text-deep font-bold font-mono text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1.5 shadow-lg shadow-gold/20">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> <span id="btn-modal-text">NUEVA IDEA</span>
-                    </button>
-                </div>
-            </header>
-
-            <!-- ÁREA DE CONTENIDO -->
-            <main id="main-content" class="flex-1 overflow-y-auto p-6 space-y-6">
-                <!-- Inyectado por JS -->
-            </main>
         </div>
-    </div>
+        <div class="flex items-center gap-2">
+            <button onclick="exportData()" title="Respaldar Datos" class="p-2 bg-carbon border border-graphite text-subtle hover:text-gold rounded-xl transition">
+                <i data-lucide="download" class="w-4 h-4"></i>
+            </button>
+            <button onclick="openModal()" class="px-3.5 py-1.5 bg-gold text-deep font-bold font-mono text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1 shadow-lg shadow-gold/20 active:scale-95">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> <span id="btn-modal-text">NUEVO</span>
+            </button>
+        </div>
+    </header>
 
-    <!-- MODAL CON TEXTOS EN NEGRO CLARO PARA PERFECTA VISIBILIDAD -->
-    <div id="modal-backdrop" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="terminal-panel w-full max-w-lg rounded-3xl p-6 border border-graphite space-y-4 shadow-2xl">
+    <!-- ÁREA DE CONTENIDO PRINCIPAL -->
+    <main id="main-content" class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+        <!-- Inyectado dinámicamente -->
+    </main>
+
+    <!-- NAVEGACIÓN INFERIOR FIJA -->
+    <nav class="bg-carbon border-t border-graphite px-6 py-3 flex justify-around items-center shrink-0">
+        <button onclick="switchView('ideas')" id="nav-ideas" class="flex flex-col items-center gap-1 text-gold">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+            <span class="text-[10px] font-mono font-medium">Ideas & Notas</span>
+        </button>
+        <button onclick="switchView('projects')" id="nav-projects" class="flex flex-col items-center gap-1 text-subtle">
+            <i data-lucide="briefcase" class="w-5 h-5"></i>
+            <span class="text-[10px] font-mono font-medium">Proyectos</span>
+        </button>
+    </nav>
+
+    <!-- MODAL GENERAL ESTILO TERMINAL -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="terminal-panel w-full sm:max-w-lg rounded-t-3xl sm:rounded-3xl p-6 border border-graphite space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-graphite pb-3">
                 <h3 id="modal-title" class="text-xs font-mono font-bold uppercase tracking-wider text-gold">// NUEVO REGISTRO</h3>
-                <button onclick="closeModal()" class="text-subtle hover:text-warmWhite"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <button onclick="closeModal()" class="text-subtle hover:text-warmWhite p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div id="modal-body" class="space-y-3 font-mono">
-                <!-- Formulario -->
+                <!-- Formulario dinámico -->
             </div>
         </div>
     </div>
 
-    <!-- MOTOR JAVASCRIPT -->
+    <!-- MOTOR JAVASCRIPT DEFINITIVO -->
     <script>
         const defaultState = {
             activeView: 'ideas',
+            searchQuery: '',
+            filterCategory: 'ALL',
+            companies: ['FIDIUM Legal', 'Impeweb Soluciones', 'Reyno Boots', 'Personal'],
             ideas: [
-                { id: 1, title: 'Estructura de contratos digitales para FIDIUM', category: 'FIDIUM Legal Tech', content: 'Desarrollar una plantilla automatizada para clientes corporativos internacionales en México y Chile.', date: '2026-11-06' }
+                { id: 1, title: 'Estructura corporativa transfronteriza', category: 'FIDIUM Legal', content: 'Plantilla de contratos internacionales para clientes en México y Chile.', date: '2026-11-06' }
             ],
             projects: [
-                { id: 1, title: 'Registro Marcas INAPI / IMPI', client: 'FIDIUM Legal', status: 'En Proceso' },
-                { id: 2, title: 'Agenda Institucional CGE 2026', client: 'CGE Institucional', status: 'Iniciado' },
-                { id: 3, title: 'Renovación Certificación Marca GTO', client: 'Impeweb Soluciones', status: 'Pendiente' },
-                { id: 4, title: 'Auditoría Contable Q3', client: 'Reyno Boots', status: 'Concluido' }
+                { id: 1, title: 'Registro Marcas INAPI / IMPI', client: 'FIDIUM Legal', status: 'En Proceso', deadline: '2026-12-15' },
+                { id: 2, title: 'Distribución de Calzado USA', client: 'Reyno Boots', status: 'Iniciado', deadline: '2026-12-30' }
             ]
         };
 
-        let appState = JSON.parse(localStorage.getItem('falcon_terminal_v3')) || defaultState;
+        let appState = JSON.parse(localStorage.getItem('falcon_os_ultimate')) || defaultState;
         let activeChart = null;
 
         function saveState() {
-            localStorage.setItem('falcon_terminal_v3', JSON.stringify(appState));
+            localStorage.setItem('falcon_os_ultimate', JSON.stringify(appState));
             renderApp();
         }
 
         function switchView(view) {
             appState.activeView = view;
+            appState.searchQuery = '';
             renderApp();
         }
-
-        setInterval(() => {
-            const now = new Date();
-            const clockEl = document.getElementById('live-clock');
-            if(clockEl) clockEl.innerText = now.toLocaleTimeString();
-        }, 1000);
 
         function renderApp() {
             const isIdeas = appState.activeView === 'ideas';
             
-            document.getElementById('nav-ideas').className = `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition ${isIdeas ? 'bg-graphite text-warmWhite border border-gold/30 shadow-sm' : 'text-subtle hover:bg-carbon hover:text-warmWhite'}`;
-            document.getElementById('nav-projects').className = `w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition ${!isIdeas ? 'bg-graphite text-warmWhite border border-gold/30 shadow-sm' : 'text-subtle hover:bg-carbon hover:text-warmWhite'}`;
-
-            document.getElementById('header-title').innerText = isIdeas ? '// DIARIO DE IDEAS Y APUNTES' : '// PIPELINE DE CONTROL DE PROYECTOS';
-            document.getElementById('btn-modal-text').innerText = isIdeas ? 'NUEVA IDEA' : 'NUEVO PROYECTO';
+            document.getElementById('nav-ideas').className = `flex flex-col items-center gap-1 ${isIdeas ? 'text-gold' : 'text-subtle'}`;
+            document.getElementById('nav-projects').className = `flex flex-col items-center gap-1 ${!isIdeas ? 'text-gold' : 'text-subtle'}`;
+            document.getElementById('btn-modal-text').innerText = isIdeas ? 'NUEVA IDEA' : 'PROYECTO';
 
             const mainContent = document.getElementById('main-content');
 
+            const query = appState.searchQuery.toLowerCase();
+            const filteredIdeas = appState.ideas.filter(i => 
+                (appState.filterCategory === 'ALL' || i.category === appState.filterCategory) &&
+                (i.title.toLowerCase().includes(query) || i.content.toLowerCase().includes(query))
+            );
+            const filteredProjects = appState.projects.filter(p => 
+                (appState.filterCategory === 'ALL' || p.client === appState.filterCategory) &&
+                (p.title.toLowerCase().includes(query))
+            );
+
             if (isIdeas) {
                 mainContent.innerHTML = `
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono mb-2">
-                        <div class="terminal-panel p-4 rounded-2xl border border-graphite">
-                            <span class="text-[10px] text-subtle uppercase">Notas Registradas</span>
-                            <p class="text-xl font-bold text-gold mt-1">${appState.ideas.length} Apuntes</p>
-                            <span class="text-[10px] text-terminalGreen mt-1 block">Diario activo sin restricciones</span>
+                    <div class="space-y-2 font-mono">
+                        <div class="relative">
+                            <i data-lucide="search" class="w-4 h-4 text-subtle absolute left-3 top-3"></i>
+                            <input type="text" value="${appState.searchQuery}" oninput="updateSearch(this.value)" placeholder="Buscar idea o nota..." class="w-full bg-carbon border border-graphite rounded-xl pl-9 pr-3 py-2 text-xs text-warmWhite focus:outline-none focus:border-gold">
                         </div>
-                        <div class="terminal-panel p-4 rounded-2xl border border-graphite">
-                            <span class="text-[10px] text-subtle uppercase">Enfoque Actual</span>
-                            <p class="text-xl font-bold text-warmWhite mt-1">Visión de Águila</p>
-                            <span class="text-[10px] text-subtle mt-1 block">Estrategia & Negocios</span>
+                        <div class="flex gap-1.5 overflow-x-auto pb-1 text-[9px] hide-scrollbar">
+                            <button onclick="setCategoryFilter('ALL')" class="px-2.5 py-1 rounded-lg border shrink-0 ${appState.filterCategory === 'ALL' ? 'bg-gold text-deep font-bold border-gold' : 'bg-carbon text-subtle border-graphite'}">TODOS</button>
+                            ${appState.companies.map(c => `
+                                <button onclick="setCategoryFilter('${c}')" class="px-2.5 py-1 rounded-lg border shrink-0 ${appState.filterCategory === c ? 'bg-gold text-deep font-bold border-gold' : 'bg-carbon text-subtle border-graphite'}">${c}</button>
+                            `).join('')}
                         </div>
                     </div>
 
-                    <!-- TARJETAS DE DIARIO DE IDEAS -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        ${appState.ideas.map(i => `
-                            <div class="terminal-panel p-5 rounded-2xl border border-graphite space-y-3 flex flex-col justify-between">
-                                <div class="space-y-2">
+                    <div class="space-y-3">
+                        ${filteredIdeas.map(i => `
+                            <div class="terminal-panel p-4 rounded-2xl border border-graphite space-y-2 flex flex-col justify-between">
+                                <div class="space-y-1.5">
                                     <div class="flex justify-between items-start">
                                         <h4 class="text-sm font-bold text-warmWhite">${i.title}</h4>
-                                        <span class="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20 font-mono">${i.date}</span>
+                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20">${i.date}</span>
                                     </div>
-                                    <span class="text-[10px] px-2 py-0.5 rounded bg-carbon border border-graphite text-subtle font-mono block w-max">${i.category}</span>
+                                    <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-carbon border border-graphite text-subtle inline-block">${i.category}</span>
                                     <p class="text-xs text-subtle leading-relaxed pt-1 font-sans">${i.content}</p>
                                 </div>
-                                <div class="flex justify-end pt-3 border-t border-graphite">
+                                <div class="flex justify-between items-center pt-2 border-t border-graphite">
+                                    <button onclick="copyToClipboard('${i.title}: ${i.content}')" class="text-subtle hover:text-gold text-[10px] flex items-center gap-1 font-mono">
+                                        <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar
+                                    </button>
                                     <button onclick="deleteIdea(${i.id})" class="text-subtle hover:text-terminalRed p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                                 </div>
                             </div>
@@ -247,43 +227,57 @@
                 const countDone = appState.projects.filter(p => p.status === 'Concluido').length;
 
                 mainContent.innerHTML = `
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
-                        <div class="terminal-panel p-4 rounded-2xl border border-graphite">
-                            <span class="text-[10px] text-subtle uppercase">Proyectos Pendientes</span>
-                            <p class="text-xl font-bold text-terminalRed mt-1">${countPend} Por Iniciar</p>
+                    <div class="grid grid-cols-3 gap-2 font-mono text-center">
+                        <div class="terminal-panel p-2.5 rounded-2xl border border-graphite">
+                            <span class="text-[8px] text-subtle uppercase block">Pendientes</span>
+                            <p class="text-base font-bold text-terminalRed mt-0.5">${countPend}</p>
                         </div>
-                        <div class="terminal-panel p-4 rounded-2xl border border-graphite">
-                            <span class="text-[10px] text-subtle uppercase">En Ejecución</span>
-                            <p class="text-xl font-bold text-gold mt-1">${countInit} En Curso</p>
+                        <div class="terminal-panel p-2.5 rounded-2xl border border-graphite">
+                            <span class="text-[8px] text-subtle uppercase block">En Curso</span>
+                            <p class="text-base font-bold text-gold mt-0.5">${countInit}</p>
                         </div>
-                        <div class="terminal-panel p-4 rounded-2xl border border-graphite">
-                            <span class="text-[10px] text-subtle uppercase">Concluidos</span>
-                            <p class="text-xl font-bold text-terminalGreen mt-1">${countDone} Finalizados</p>
+                        <div class="terminal-panel p-2.5 rounded-2xl border border-graphite">
+                            <span class="text-[8px] text-subtle uppercase block">Concluidos</span>
+                            <p class="text-base font-bold text-terminalGreen mt-0.5">${countDone}</p>
                         </div>
                     </div>
 
-                    <!-- GRÁFICA DE BARRAS DE PROYECTOS -->
-                    <div class="terminal-panel p-5 rounded-2xl border border-graphite space-y-3">
-                        <div class="flex justify-between items-center font-mono text-xs">
-                            <span class="text-gold uppercase tracking-wider">// Distribución de Proyectos por Estatus</span>
-                            <span class="text-subtle">Gráfica Interactiva</span>
+                    <div class="space-y-2 font-mono">
+                        <div class="relative">
+                            <i data-lucide="search" class="w-4 h-4 text-subtle absolute left-3 top-3"></i>
+                            <input type="text" value="${appState.searchQuery}" oninput="updateSearch(this.value)" placeholder="Buscar proyecto..." class="w-full bg-carbon border border-graphite rounded-xl pl-9 pr-3 py-2 text-xs text-warmWhite focus:outline-none focus:border-gold">
                         </div>
-                        <div class="h-64 relative">
+                        <div class="flex gap-1.5 overflow-x-auto pb-1 text-[9px] hide-scrollbar">
+                            <button onclick="setCategoryFilter('ALL')" class="px-2.5 py-1 rounded-lg border shrink-0 ${appState.filterCategory === 'ALL' ? 'bg-gold text-deep font-bold border-gold' : 'bg-carbon text-subtle border-graphite'}">TODOS</button>
+                            ${appState.companies.map(c => `
+                                <button onclick="setCategoryFilter('${c}')" class="px-2.5 py-1 rounded-lg border shrink-0 ${appState.filterCategory === c ? 'bg-gold text-deep font-bold border-gold' : 'bg-carbon text-subtle border-graphite'}">${c}</button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="terminal-panel p-4 rounded-2xl border border-graphite space-y-2">
+                        <div class="flex justify-between items-center font-mono text-[10px]">
+                            <span class="text-gold uppercase tracking-wider">// Pipeline Global</span>
+                            <span class="text-subtle">Gráfica Live</span>
+                        </div>
+                        <div class="h-36 relative">
                             <canvas id="projectsBarChart"></canvas>
                         </div>
                     </div>
 
-                    <!-- LISTA DE PROYECTOS -->
-                    <div class="space-y-3">
-                        ${appState.projects.map(p => `
-                            <div class="terminal-panel p-5 rounded-2xl border border-graphite flex justify-between items-center font-mono">
-                                <div class="space-y-1">
-                                    <h4 class="text-sm font-bold text-warmWhite">${p.title}</h4>
-                                    <p class="text-xs text-subtle">Cliente / Área: <span class="text-warmWhite">${p.client}</span></p>
+                    <div class="space-y-2.5">
+                        ${filteredProjects.map(p => `
+                            <div class="terminal-panel p-4 rounded-2xl border border-graphite flex justify-between items-center font-mono">
+                                <div class="space-y-0.5">
+                                    <h4 class="text-xs font-bold text-warmWhite">${p.title}</h4>
+                                    <p class="text-[10px] text-subtle">Empresa: <span class="text-warmWhite">${p.client}</span></p>
+                                    ${p.deadline ? `<p class="text-[9px] text-gold">Límite: ${p.deadline}</p>` : ''}
                                 </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="text-[10px] px-2.5 py-1 rounded-lg font-semibold border ${getStatusStyle(p.status)}">${p.status}</span>
-                                    <button onclick="deleteProject(${p.id})" class="text-subtle hover:text-terminalRed p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="cycleStatus(${p.id})" class="text-[9px] px-2 py-0.5 rounded-md font-semibold border ${getStatusStyle(p.status)} active:scale-95 transition">
+                                        ${p.status}
+                                    </button>
+                                    <button onclick="deleteProject(${p.id})" class="text-subtle hover:text-terminalRed p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                                 </div>
                             </div>
                         `).join('')}
@@ -296,6 +290,26 @@
             lucide.createIcons();
         }
 
+        function updateSearch(val) {
+            appState.searchQuery = val;
+            renderApp();
+        }
+
+        function setCategoryFilter(cat) {
+            appState.filterCategory = cat;
+            renderApp();
+        }
+
+        function cycleStatus(id) {
+            const proj = appState.projects.find(p => p.id === id);
+            if (!proj) return;
+
+            const order = ['Pendiente', 'Iniciado', 'En Proceso', 'En Pausa', 'Concluido'];
+            const nextIdx = (order.indexOf(proj.status) + 1) % order.length;
+            proj.status = order[nextIdx];
+            saveState();
+        }
+
         function getStatusStyle(status) {
             switch(status) {
                 case 'Pendiente': return 'bg-red-500/10 text-terminalRed border-red-500/20';
@@ -305,6 +319,22 @@
                 case 'Concluido': return 'bg-emerald-500/10 text-terminalGreen border-emerald-500/20';
                 default: return 'bg-graphite text-subtle border-graphite';
             }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('¡Copiado al portapapeles!');
+            });
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "falcon_os_backup.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
         }
 
         function renderProjectsBarChart() {
@@ -320,7 +350,7 @@
                 data: {
                     labels: statuses,
                     datasets: [{
-                        label: 'Cantidad de Proyectos',
+                        label: 'Proyectos',
                         data: counts,
                         backgroundColor: ['#EF4444', '#3B82F6', '#C5A059', '#6B7280', '#10B981'],
                         borderRadius: 6
@@ -331,38 +361,34 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { ticks: { color: '#9CA3AF', font: { family: 'monospace', size: 11 } }, grid: { color: '#1C1E24' } },
-                        y: { ticks: { color: '#9CA3AF', font: { family: 'monospace', size: 11 }, stepSize: 1 }, grid: { color: '#1C1E24' } }
+                        x: { ticks: { color: '#9CA3AF', font: { family: 'monospace', size: 9 } }, grid: { color: '#1C1E24' } },
+                        y: { ticks: { color: '#9CA3AF', font: { family: 'monospace', size: 9 }, stepSize: 1 }, grid: { color: '#1C1E24' } }
                     }
                 }
             });
         }
 
-        // Modales con texto negro puro sobre fondo claro para visibilidad perfecta
         function openModal() {
             document.getElementById('modal-backdrop').classList.remove('hidden');
             const titleEl = document.getElementById('modal-title');
             const bodyEl = document.getElementById('modal-body');
             const isIdeas = appState.activeView === 'ideas';
 
+            const companyOptions = appState.companies.map(c => `<option value="${c}">${c}</option>`).join('') + `<option value="ADD_NEW">+ Agregar nueva empresa / cliente...</option>`;
+
             if (isIdeas) {
-                titleEl.innerText = '// NUEVA IDEA O APUNTE';
+                titleEl.innerText = '// NUEVA IDEA / APUNTE';
                 bodyEl.innerHTML = `
                     <label class="text-[10px] text-subtle uppercase block">Título de la Idea</label>
-                    <input type="text" id="idea-title" placeholder="Ej: Estrategia de expansión..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                    <input type="text" id="idea-title" placeholder="Ej: Nueva estrategia de marca..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
                     
-                    <label class="text-[10px] text-subtle uppercase block">Categoría</label>
-                    <select id="idea-cat" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
-                        <option value="FIDIUM Legal Tech">FIDIUM Legal Tech</option>
-                        <option value="CGE / Institucional">CGE / Institucional</option>
-                        <option value="Reyno Boots Corporativo">Reyno Boots Corporativo</option>
-                        <option value="Impeweb Tecnologías">Impeweb Tecnologías</option>
-                        <option value="Marca Personal & Media">Marca Personal & Media</option>
-                        <option value="Desarrollo Académico">Desarrollo Académico</option>
+                    <label class="text-[10px] text-subtle uppercase block">Categoría / Empresa</label>
+                    <select id="idea-cat" onchange="checkNewCompany(this)" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                        ${companyOptions}
                     </select>
 
-                    <label class="text-[10px] text-subtle uppercase block">Descripción / Apunte Rápido</label>
-                    <textarea id="idea-content" rows="4" placeholder="Escribe aquí los detalles del apunte o idea..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2"></textarea>
+                    <label class="text-[10px] text-subtle uppercase block">Detalles o Notas</label>
+                    <textarea id="idea-content" rows="3" placeholder="Escribe tu apunte aquí..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2"></textarea>
 
                     <button onclick="saveIdea()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition">GUARDAR APUNTE</button>
                 `;
@@ -370,15 +396,11 @@
                 titleEl.innerText = '// NUEVO PROYECTO';
                 bodyEl.innerHTML = `
                     <label class="text-[10px] text-subtle uppercase block">Título del Proyecto</label>
-                    <input type="text" id="proj-title" placeholder="Ej: Auditoría corporativa..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                    <input type="text" id="proj-title" placeholder="Ej: Registro corporativo..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
                     
-                    <label class="text-[10px] text-subtle uppercase block">Cliente / Área Responsable</label>
-                    <select id="proj-client" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
-                        <option value="FIDIUM Legal">FIDIUM Legal</option>
-                        <option value="CGE Institucional">CGE Institucional</option>
-                        <option value="Reyno Boots">Reyno Boots</option>
-                        <option value="Impeweb Soluciones">Impeweb Soluciones</option>
-                        <option value="Proyecto Personal / Académico">Proyecto Personal / Académico</option>
+                    <label class="text-[10px] text-subtle uppercase block">Empresa / Área Responsable</label>
+                    <select id="proj-client" onchange="checkNewCompany(this)" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                        ${companyOptions}
                     </select>
 
                     <label class="text-[10px] text-subtle uppercase block">Estatus de Avance</label>
@@ -390,8 +412,24 @@
                         <option value="Concluido">Concluido (Finalizado)</option>
                     </select>
 
+                    <label class="text-[10px] text-subtle uppercase block">Fecha Límite (Opcional)</label>
+                    <input type="date" id="proj-deadline" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+
                     <button onclick="saveProject()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition">GUARDAR PROYECTO</button>
                 `;
+            }
+        }
+
+        function checkNewCompany(selectEl) {
+            if (selectEl.value === 'ADD_NEW') {
+                const newComp = prompt('Introduce el nombre de la nueva empresa o cliente:');
+                if (newComp && newComp.trim() !== '') {
+                    appState.companies.push(newComp.trim());
+                    saveState();
+                    openModal();
+                } else {
+                    selectEl.selectedIndex = 0;
+                }
             }
         }
 
@@ -406,7 +444,7 @@
 
             if(!title) return;
             const dateStr = new Date().toISOString().split('T')[0];
-            appState.ideas.push({ id: Date.now(), title, category, content: content || 'Sin notas adicionales.', date: dateStr });
+            appState.ideas.push({ id: Date.now(), title, category, content: content || 'Sin detalles.', date: dateStr });
             saveState();
             closeModal();
         }
@@ -420,9 +458,10 @@
             const title = document.getElementById('proj-title').value;
             const client = document.getElementById('proj-client').value;
             const status = document.getElementById('proj-status').value;
+            const deadline = document.getElementById('proj-deadline').value;
 
             if(!title) return;
-            appState.projects.push({ id: Date.now(), title, client, status });
+            appState.projects.push({ id: Date.now(), title, client, status, deadline });
             saveState();
             closeModal();
         }
