@@ -48,8 +48,6 @@
             color: #F4F2ED;
             -webkit-tap-highlight-color: transparent;
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
         }
         .terminal-panel {
             background: rgba(13, 14, 16, 0.95);
@@ -66,11 +64,18 @@
             display: inline-block;
             white-space: nowrap;
             padding-left: 100%;
-            animation: ticker 32s linear infinite;
+            animation: ticker 35s linear infinite;
         }
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
             100% { transform: translate3d(-100%, 0, 0); }
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -85,19 +90,19 @@
         </div>
     </div>
 
-    <!-- HEADER EJECUTIVO -->
-    <header class="px-5 py-3 border-b border-graphite bg-carbon/90 backdrop-blur-md flex justify-between items-center shrink-0">
+    <!-- HEADER EJECUTIVO FIJO -->
+    <header class="px-5 py-3 border-b border-graphite bg-carbon/95 backdrop-blur-md flex justify-between items-center shrink-0 z-20">
         <div class="flex items-center gap-2.5">
-            <div class="w-7 h-7 rounded-lg bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs font-mono">
+            <div class="w-8 h-8 rounded-xl bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs font-mono shadow-inner">
                 SF
             </div>
             <div>
                 <h1 class="text-xs font-bold font-mono tracking-wider text-warmWhite">FALCÓN OS</h1>
-                <p class="text-[9px] text-gold font-mono uppercase">Executive System</p>
+                <p class="text-[9px] text-gold font-mono uppercase">Executive Control</p>
             </div>
         </div>
         <div class="flex items-center gap-2">
-            <button onclick="exportData()" title="Respaldar Datos" class="p-2 bg-carbon border border-graphite text-subtle hover:text-gold rounded-xl transition">
+            <button onclick="exportData()" title="Respaldar Datos" class="p-2 bg-graphite/50 border border-graphite text-subtle hover:text-gold rounded-xl transition active:scale-95">
                 <i data-lucide="download" class="w-4 h-4"></i>
             </button>
             <button onclick="openModal()" class="px-3.5 py-1.5 bg-gold text-deep font-bold font-mono text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1 shadow-lg shadow-gold/20 active:scale-95">
@@ -106,18 +111,18 @@
         </div>
     </header>
 
-    <!-- ÁREA DE CONTENIDO PRINCIPAL -->
+    <!-- ÁREA DE CONTENIDO PRINCIPAL SCROLLABLE -->
     <main id="main-content" class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
         <!-- Inyectado dinámicamente -->
     </main>
 
     <!-- NAVEGACIÓN INFERIOR FIJA -->
-    <nav class="bg-carbon border-t border-graphite px-6 py-3 flex justify-around items-center shrink-0">
-        <button onclick="switchView('ideas')" id="nav-ideas" class="flex flex-col items-center gap-1 text-gold">
+    <nav class="bg-carbon border-t border-graphite px-6 py-3 flex justify-around items-center shrink-0 z-20">
+        <button onclick="switchView('ideas')" id="nav-ideas" class="flex flex-col items-center gap-1 text-gold transition">
             <i data-lucide="book-open" class="w-5 h-5"></i>
             <span class="text-[10px] font-mono font-medium">Ideas & Notas</span>
         </button>
-        <button onclick="switchView('projects')" id="nav-projects" class="flex flex-col items-center gap-1 text-subtle">
+        <button onclick="switchView('projects')" id="nav-projects" class="flex flex-col items-center gap-1 text-subtle transition">
             <i data-lucide="briefcase" class="w-5 h-5"></i>
             <span class="text-[10px] font-mono font-medium">Proyectos</span>
         </button>
@@ -136,7 +141,7 @@
         </div>
     </div>
 
-    <!-- MOTOR JAVASCRIPT DEFINITIVO -->
+    <!-- MOTOR JAVASCRIPT PROFESIONAL -->
     <script>
         const defaultState = {
             activeView: 'ideas',
@@ -152,11 +157,11 @@
             ]
         };
 
-        let appState = JSON.parse(localStorage.getItem('falcon_os_ultimate')) || defaultState;
+        let appState = JSON.parse(localStorage.getItem('falcon_os_pro_v1')) || defaultState;
         let activeChart = null;
 
         function saveState() {
-            localStorage.setItem('falcon_os_ultimate', JSON.stringify(appState));
+            localStorage.setItem('falcon_os_pro_v1', JSON.stringify(appState));
             renderApp();
         }
 
@@ -166,11 +171,22 @@
             renderApp();
         }
 
+        // Sistema de colores corporativos
+        function getCompanyBadge(company) {
+            switch(company) {
+                case 'FIDIUM Legal': return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
+                case 'Impeweb Soluciones': return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+                case 'Reyno Boots': return 'bg-orange-500/10 text-orange-400 border-orange-500/30';
+                case 'Personal': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+                default: return 'bg-gold/10 text-gold border-gold/30';
+            }
+        }
+
         function renderApp() {
             const isIdeas = appState.activeView === 'ideas';
             
-            document.getElementById('nav-ideas').className = `flex flex-col items-center gap-1 ${isIdeas ? 'text-gold' : 'text-subtle'}`;
-            document.getElementById('nav-projects').className = `flex flex-col items-center gap-1 ${!isIdeas ? 'text-gold' : 'text-subtle'}`;
+            document.getElementById('nav-ideas').className = `flex flex-col items-center gap-1 transition ${isIdeas ? 'text-gold' : 'text-subtle'}`;
+            document.getElementById('nav-projects').className = `flex flex-col items-center gap-1 transition ${!isIdeas ? 'text-gold' : 'text-subtle'}`;
             document.getElementById('btn-modal-text').innerText = isIdeas ? 'NUEVA IDEA' : 'PROYECTO';
 
             const mainContent = document.getElementById('main-content');
@@ -187,35 +203,35 @@
 
             if (isIdeas) {
                 mainContent.innerHTML = `
-                    <div class="space-y-2 font-mono">
+                    <div class="space-y-3 font-mono">
                         <div class="relative">
-                            <i data-lucide="search" class="w-4 h-4 text-subtle absolute left-3 top-3"></i>
-                            <input type="text" value="${appState.searchQuery}" oninput="updateSearch(this.value)" placeholder="Buscar idea o nota..." class="w-full bg-carbon border border-graphite rounded-xl pl-9 pr-3 py-2 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                            <i data-lucide="search" class="w-4 h-4 text-subtle absolute left-3.5 top-3"></i>
+                            <input type="text" value="${appState.searchQuery}" oninput="updateSearch(this.value)" placeholder="Buscar idea o nota..." class="w-full bg-carbon border border-graphite rounded-xl pl-10 pr-3 py-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold shadow-inner">
                         </div>
                         <div class="flex gap-1.5 overflow-x-auto pb-1 text-[9px] hide-scrollbar">
-                            <button onclick="setCategoryFilter('ALL')" class="px-2.5 py-1 rounded-lg border shrink-0 ${appState.filterCategory === 'ALL' ? 'bg-gold text-deep font-bold border-gold' : 'bg-carbon text-subtle border-graphite'}">TODOS</button>
+                            <button onclick="setCategoryFilter('ALL')" class="px-3 py-1.5 rounded-xl border shrink-0 transition ${appState.filterCategory === 'ALL' ? 'bg-gold text-deep font-bold border-gold shadow-md' : 'bg-carbon text-subtle border-graphite'}">TODOS</button>
                             ${appState.companies.map(c => `
-                                <button onclick="setCategoryFilter('${c}')" class="px-2.5 py-1 rounded-lg border shrink-0 ${appState.filterCategory === c ? 'bg-gold text-deep font-bold border-gold' : 'bg-carbon text-subtle border-graphite'}">${c}</button>
+                                <button onclick="setCategoryFilter('${c}')" class="px-3 py-1.5 rounded-xl border shrink-0 transition ${appState.filterCategory === c ? 'bg-gold text-deep font-bold border-gold shadow-md' : 'bg-carbon text-subtle border-graphite'}">${c}</button>
                             `).join('')}
                         </div>
                     </div>
 
                     <div class="space-y-3">
                         ${filteredIdeas.map(i => `
-                            <div class="terminal-panel p-4 rounded-2xl border border-graphite space-y-2 flex flex-col justify-between">
+                            <div class="terminal-panel p-4 rounded-2xl border border-graphite space-y-2.5 flex flex-col justify-between shadow-lg">
                                 <div class="space-y-1.5">
-                                    <div class="flex justify-between items-start">
-                                        <h4 class="text-sm font-bold text-warmWhite">${i.title}</h4>
-                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20">${i.date}</span>
+                                    <div class="flex justify-between items-start gap-2">
+                                        <h4 class="text-sm font-bold text-warmWhite leading-snug">${i.title}</h4>
+                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded-md bg-carbon border border-graphite text-subtle shrink-0">${i.date}</span>
                                     </div>
-                                    <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-carbon border border-graphite text-subtle inline-block">${i.category}</span>
+                                    <span class="text-[9px] font-mono px-2.5 py-0.5 rounded-lg border inline-block ${getCompanyBadge(i.category)}">${i.category}</span>
                                     <p class="text-xs text-subtle leading-relaxed pt-1 font-sans">${i.content}</p>
                                 </div>
-                                <div class="flex justify-between items-center pt-2 border-t border-graphite">
-                                    <button onclick="copyToClipboard('${i.title}: ${i.content}')" class="text-subtle hover:text-gold text-[10px] flex items-center gap-1 font-mono">
+                                <div class="flex justify-between items-center pt-2.5 border-t border-graphite">
+                                    <button onclick="copyToClipboard('${i.title}: ${i.content}')" class="text-subtle hover:text-gold text-[10px] flex items-center gap-1.5 font-mono transition">
                                         <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar
                                     </button>
-                                    <button onclick="deleteIdea(${i.id})" class="text-subtle hover:text-terminalRed p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                    <button onclick="deleteIdea(${i.id})" class="text-subtle hover:text-terminalRed p-1 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                                 </div>
                             </div>
                         `).join('')}
@@ -228,36 +244,36 @@
 
                 mainContent.innerHTML = `
                     <div class="grid grid-cols-3 gap-2 font-mono text-center">
-                        <div class="terminal-panel p-2.5 rounded-2xl border border-graphite">
+                        <div class="terminal-panel p-3 rounded-2xl border border-graphite shadow-md">
                             <span class="text-[8px] text-subtle uppercase block">Pendientes</span>
                             <p class="text-base font-bold text-terminalRed mt-0.5">${countPend}</p>
                         </div>
-                        <div class="terminal-panel p-2.5 rounded-2xl border border-graphite">
+                        <div class="terminal-panel p-3 rounded-2xl border border-graphite shadow-md">
                             <span class="text-[8px] text-subtle uppercase block">En Curso</span>
                             <p class="text-base font-bold text-gold mt-0.5">${countInit}</p>
                         </div>
-                        <div class="terminal-panel p-2.5 rounded-2xl border border-graphite">
+                        <div class="terminal-panel p-3 rounded-2xl border border-graphite shadow-md">
                             <span class="text-[8px] text-subtle uppercase block">Concluidos</span>
                             <p class="text-base font-bold text-terminalGreen mt-0.5">${countDone}</p>
                         </div>
                     </div>
 
-                    <div class="space-y-2 font-mono">
+                    <div class="space-y-3 font-mono">
                         <div class="relative">
-                            <i data-lucide="search" class="w-4 h-4 text-subtle absolute left-3 top-3"></i>
-                            <input type="text" value="${appState.searchQuery}" oninput="updateSearch(this.value)" placeholder="Buscar proyecto..." class="w-full bg-carbon border border-graphite rounded-xl pl-9 pr-3 py-2 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                            <i data-lucide="search" class="w-4 h-4 text-subtle absolute left-3.5 top-3"></i>
+                            <input type="text" value="${appState.searchQuery}" oninput="updateSearch(this.value)" placeholder="Buscar proyecto..." class="w-full bg-carbon border border-graphite rounded-xl pl-10 pr-3 py-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold shadow-inner">
                         </div>
                         <div class="flex gap-1.5 overflow-x-auto pb-1 text-[9px] hide-scrollbar">
-                            <button onclick="setCategoryFilter('ALL')" class="px-2.5 py-1 rounded-lg border shrink-0 ${appState.filterCategory === 'ALL' ? 'bg-gold text-deep font-bold border-gold' : 'bg-carbon text-subtle border-graphite'}">TODOS</button>
+                            <button onclick="setCategoryFilter('ALL')" class="px-3 py-1.5 rounded-xl border shrink-0 transition ${appState.filterCategory === 'ALL' ? 'bg-gold text-deep font-bold border-gold shadow-md' : 'bg-carbon text-subtle border-graphite'}">TODOS</button>
                             ${appState.companies.map(c => `
-                                <button onclick="setCategoryFilter('${c}')" class="px-2.5 py-1 rounded-lg border shrink-0 ${appState.filterCategory === c ? 'bg-gold text-deep font-bold border-gold' : 'bg-carbon text-subtle border-graphite'}">${c}</button>
+                                <button onclick="setCategoryFilter('${c}')" class="px-3 py-1.5 rounded-xl border shrink-0 transition ${appState.filterCategory === c ? 'bg-gold text-deep font-bold border-gold shadow-md' : 'bg-carbon text-subtle border-graphite'}">${c}</button>
                             `).join('')}
                         </div>
                     </div>
 
-                    <div class="terminal-panel p-4 rounded-2xl border border-graphite space-y-2">
+                    <div class="terminal-panel p-4 rounded-2xl border border-graphite space-y-2 shadow-md">
                         <div class="flex justify-between items-center font-mono text-[10px]">
-                            <span class="text-gold uppercase tracking-wider">// Pipeline Global</span>
+                            <span class="text-gold uppercase tracking-wider font-bold">// Pipeline Global</span>
                             <span class="text-subtle">Gráfica Live</span>
                         </div>
                         <div class="h-36 relative">
@@ -265,19 +281,19 @@
                         </div>
                     </div>
 
-                    <div class="space-y-2.5">
+                    <div class="space-y-3">
                         ${filteredProjects.map(p => `
-                            <div class="terminal-panel p-4 rounded-2xl border border-graphite flex justify-between items-center font-mono">
-                                <div class="space-y-0.5">
+                            <div class="terminal-panel p-4 rounded-2xl border border-graphite flex justify-between items-center font-mono shadow-lg">
+                                <div class="space-y-1">
                                     <h4 class="text-xs font-bold text-warmWhite">${p.title}</h4>
-                                    <p class="text-[10px] text-subtle">Empresa: <span class="text-warmWhite">${p.client}</span></p>
-                                    ${p.deadline ? `<p class="text-[9px] text-gold">Límite: ${p.deadline}</p>` : ''}
+                                    <span class="text-[9px] font-mono px-2 py-0.5 rounded-md border inline-block ${getCompanyBadge(p.client)}">${p.client}</span>
+                                    ${p.deadline ? `<p class="text-[9px] text-gold pt-0.5">Límite: ${p.deadline}</p>` : ''}
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <button onclick="cycleStatus(${p.id})" class="text-[9px] px-2 py-0.5 rounded-md font-semibold border ${getStatusStyle(p.status)} active:scale-95 transition">
+                                <div class="flex items-center gap-2.5">
+                                    <button onclick="cycleStatus(${p.id})" class="text-[9px] px-2.5 py-1 rounded-lg font-semibold border ${getStatusStyle(p.status)} active:scale-95 transition shadow-sm">
                                         ${p.status}
                                     </button>
-                                    <button onclick="deleteProject(${p.id})" class="text-subtle hover:text-terminalRed p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                    <button onclick="deleteProject(${p.id})" class="text-subtle hover:text-terminalRed p-1 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                                 </div>
                             </div>
                         `).join('')}
@@ -312,11 +328,11 @@
 
         function getStatusStyle(status) {
             switch(status) {
-                case 'Pendiente': return 'bg-red-500/10 text-terminalRed border-red-500/20';
-                case 'Iniciado': return 'bg-blue-500/10 text-terminalBlue border-blue-500/20';
-                case 'En Proceso': return 'bg-yellow-500/10 text-gold border-yellow-500/20';
-                case 'En Pausa': return 'bg-gray-500/10 text-subtle border-gray-500/20';
-                case 'Concluido': return 'bg-emerald-500/10 text-terminalGreen border-emerald-500/20';
+                case 'Pendiente': return 'bg-red-500/10 text-terminalRed border-red-500/30';
+                case 'Iniciado': return 'bg-blue-500/10 text-terminalBlue border-blue-500/30';
+                case 'En Proceso': return 'bg-yellow-500/10 text-gold border-yellow-500/30';
+                case 'En Pausa': return 'bg-gray-500/10 text-subtle border-gray-500/30';
+                case 'Concluido': return 'bg-emerald-500/10 text-terminalGreen border-emerald-500/30';
                 default: return 'bg-graphite text-subtle border-graphite';
             }
         }
@@ -380,31 +396,31 @@
                 titleEl.innerText = '// NUEVA IDEA / APUNTE';
                 bodyEl.innerHTML = `
                     <label class="text-[10px] text-subtle uppercase block">Título de la Idea</label>
-                    <input type="text" id="idea-title" placeholder="Ej: Nueva estrategia de marca..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                    <input type="text" id="idea-title" placeholder="Ej: Nueva estrategia de marca..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
                     
                     <label class="text-[10px] text-subtle uppercase block">Categoría / Empresa</label>
-                    <select id="idea-cat" onchange="checkNewCompany(this)" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                    <select id="idea-cat" onchange="checkNewCompany(this)" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
                         ${companyOptions}
                     </select>
 
                     <label class="text-[10px] text-subtle uppercase block">Detalles o Notas</label>
-                    <textarea id="idea-content" rows="3" placeholder="Escribe tu apunte aquí..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2"></textarea>
+                    <textarea id="idea-content" rows="3" placeholder="Escribe tu apunte aquí..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm"></textarea>
 
-                    <button onclick="saveIdea()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition">GUARDAR APUNTE</button>
+                    <button onclick="saveIdea()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition shadow-md">GUARDAR APUNTE</button>
                 `;
             } else {
                 titleEl.innerText = '// NUEVO PROYECTO';
                 bodyEl.innerHTML = `
                     <label class="text-[10px] text-subtle uppercase block">Título del Proyecto</label>
-                    <input type="text" id="proj-title" placeholder="Ej: Registro corporativo..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                    <input type="text" id="proj-title" placeholder="Ej: Registro corporativo..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
                     
                     <label class="text-[10px] text-subtle uppercase block">Empresa / Área Responsable</label>
-                    <select id="proj-client" onchange="checkNewCompany(this)" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                    <select id="proj-client" onchange="checkNewCompany(this)" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
                         ${companyOptions}
                     </select>
 
                     <label class="text-[10px] text-subtle uppercase block">Estatus de Avance</label>
-                    <select id="proj-status" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                    <select id="proj-status" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
                         <option value="Pendiente">Pendiente (En Cola)</option>
                         <option value="Iniciado">Iniciado (Fase Inicial)</option>
                         <option value="En Proceso">En Proceso (Ejecución)</option>
@@ -413,9 +429,9 @@
                     </select>
 
                     <label class="text-[10px] text-subtle uppercase block">Fecha Límite (Opcional)</label>
-                    <input type="date" id="proj-deadline" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2">
+                    <input type="date" id="proj-deadline" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
 
-                    <button onclick="saveProject()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition">GUARDAR PROYECTO</button>
+                    <button onclick="saveProject()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition shadow-md">GUARDAR PROYECTO</button>
                 `;
             }
         }
