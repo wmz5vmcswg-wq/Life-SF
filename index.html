@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>FALCÓN OS | Personal & Business Operating System</title>
+    <title>FALCÓN OS | Sistema Operativo Ejecutivo</title>
     
     <!-- PWA & Apple Web App Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,7 +60,7 @@
 </head>
 <body class="h-screen flex overflow-hidden select-none">
 
-    <!-- BARRA LATERAL EJECUTIVA (DESKTOP & RESPONSIVE) -->
+    <!-- BARRA LATERAL EJECUTIVA -->
     <aside id="sidebar" class="w-64 flex flex-col border-r border-graphite bg-carbon transition-all duration-300 z-30 shrink-0">
         <div class="p-5 flex items-center justify-between border-b border-graphite">
             <div class="flex items-center gap-3">
@@ -75,7 +75,7 @@
         </div>
 
         <nav id="nav-modules" class="flex-1 overflow-y-auto px-3 py-4 space-y-1 hide-scrollbar">
-            <!-- Inyectado por JS -->
+            <!-- Renderizado dinámico -->
         </nav>
 
         <div class="p-4 border-t border-graphite flex items-center gap-3 bg-deep/50">
@@ -104,11 +104,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <div class="relative hidden sm:block">
-                    <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-subtle"></i>
-                    <input type="text" placeholder="Buscar en sistemas..." class="bg-carbon border border-graphite rounded-xl pl-9 pr-4 py-1.5 text-xs text-warmWhite focus:outline-none focus:border-gold w-64">
-                </div>
-                <button onclick="triggerQuickAddModal()" class="px-3.5 py-1.5 bg-gold text-deep font-semibold text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1.5 shadow-lg shadow-gold/20">
+                <button onclick="openModal('quick')" class="px-3.5 py-1.5 bg-gold text-deep font-semibold text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1.5 shadow-lg shadow-gold/20">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i> Captura Rápida
                 </button>
             </div>
@@ -116,15 +112,15 @@
 
         <!-- ÁREA DE CONTENIDO DINÁMICO -->
         <main id="main-content" class="flex-1 overflow-y-auto p-6 space-y-6">
-            <!-- Contenido renderizado por JS según el módulo activo -->
+            <!-- Contenido dinámico -->
         </main>
     </div>
 
-    <!-- MODAL DE CAPTURA RÁPIDA / ACCIÓN -->
+    <!-- MODAL GENERAL UNIFICADO -->
     <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="glass-panel w-full max-w-lg rounded-3xl p-6 border border-graphite space-y-4">
             <div class="flex justify-between items-center">
-                <h3 id="modal-title" class="text-sm font-bold uppercase tracking-wider text-warmWhite">Captura Estratégica</h3>
+                <h3 id="modal-title" class="text-sm font-bold uppercase tracking-wider text-warmWhite">Gestión Ejecutiva</h3>
                 <button onclick="closeModal()" class="text-subtle hover:text-warmWhite"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div id="modal-body" class="space-y-3">
@@ -133,9 +129,8 @@
         </div>
     </div>
 
-    <!-- MOTOR JAVASCRIPT DE FALCÓN OS -->
+    <!-- MOTOR JAVASCRIPT LOCAL Y FUNCIONAL -->
     <script>
-        // Estructura de Módulos del Sistema
         const modules = [
             { id: 'dashboard', name: 'Dashboard', icon: 'layout-dashboard' },
             { id: 'objectives', name: 'Objetivos', icon: 'target' },
@@ -151,7 +146,6 @@
             { id: 'ai', name: 'Director Estratégico IA', icon: 'bot' }
         ];
 
-        // Estado inicial persistente
         const defaultState = {
             activeModule: 'dashboard',
             sidebarOpen: true,
@@ -167,22 +161,20 @@
                 { id: 1, title: 'Registro Marcas INAPI/IMPI', client: 'FIDIUM Direct', budget: '$25,000 MXN', status: 'Activo' }
             ],
             finances: {
-                cashflow: 142500,
-                income: 185000,
-                expenses: 42500
+                transactions: [
+                    { id: 1, type: 'income', desc: 'Asesoría Jurídica Corporativa FIDIUM', amount: 45000, date: '2026-11-01' },
+                    { id: 2, type: 'expense', desc: 'Infraestructura Cloud & Software', amount: 8500, date: '2026-11-03' }
+                ]
             },
             contacts: [
                 { id: 1, name: 'Ingrid', company: 'Equinix Chile', role: 'Infraestructura', sector: 'Tecnología' }
-            ],
-            academy: [
-                { id: 1, course: 'Responsabilidad Extracontractual', institution: 'Universidad Andrés Bello', progress: '85%' }
             ],
             habits: [
                 { id: 1, name: 'Entrenamiento de fuerza (06:00 AM)', streak: 18, done: true },
                 { id: 2, name: 'Lectura y análisis jurídico', streak: 12, done: false }
             ],
             aiChat: [
-                { sender: 'ai', text: 'Saludos, Saúl. Sistemas operativos sincronizados. He analizado las cargas de FIDIUM y el CGE. ¿Qué directriz estratégica ejecutamos hoy?' }
+                { sender: 'ai', text: 'Saludos, Saúl. Motor analítico local activado. He procesado tus proyectos de FIDIUM y flujos financieros. ¿Qué directriz estratégica evaluamos?' }
             ]
         };
 
@@ -205,9 +197,7 @@
             renderApp();
         }
 
-        // Renderizador General de la Aplicación
         function renderApp() {
-            // Renderizar Navegación Lateral
             const navContainer = document.getElementById('nav-modules');
             navContainer.innerHTML = modules.map(m => `
                 <button onclick="switchModule('${m.id}')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition ${appState.activeModule === m.id ? 'bg-graphite text-warmWhite border border-gold/30 shadow-sm' : 'text-subtle hover:bg-carbon hover:text-warmWhite'}">
@@ -218,19 +208,22 @@
 
             document.getElementById('header-title').innerText = `Módulo: ${modules.find(m => m.id === appState.activeModule)?.name || 'Dashboard'}`;
 
-            // Renderizar Vistas según Módulo Activo
             const mainContent = document.getElementById('main-content');
             
             if (appState.activeModule === 'dashboard') {
+                const totalIncome = appState.finances.transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + t.amount, 0);
+                const totalExpense = appState.finances.transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
+                const netCash = totalIncome - totalExpense;
+
                 mainContent.innerHTML = `
                     <div class="glass-panel rounded-2xl p-6 border border-graphite shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
                             <h1 class="text-2xl font-bold tracking-tight text-warmWhite">Centro de Mando Operativo</h1>
-                            <p class="text-xs text-subtle mt-1">Sistemas sincronizados. 3 prioridades principales de ejecución activa.</p>
+                            <p class="text-xs text-subtle mt-1">Sistemas sincronizados localmente. 3 prioridades principales de ejecución.</p>
                         </div>
-                        <div class="px-3.5 py-1.5 rounded-xl bg-graphite border border-gold/30 text-xs font-medium text-gold">
-                            Q4 2026 • Alto Rendimiento
-                        </div>
+                        <button onclick="openModal('priority')" class="px-3.5 py-1.5 rounded-xl bg-graphite border border-gold/30 text-xs font-semibold text-gold hover:bg-graphite/80 transition">
+                            + Añadir Prioridad
+                        </button>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -247,7 +240,10 @@
                                                 <span class="w-5 h-5 rounded-full bg-graphite flex items-center justify-center text-[10px] font-bold text-gold">${idx + 1}</span>
                                                 <span class="text-xs font-medium text-warmWhite">${p.text}</span>
                                             </div>
-                                            <span class="text-[10px] px-2 py-0.5 rounded-md bg-carbon border border-graphite text-subtle">${p.area}</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-[10px] px-2 py-0.5 rounded-md bg-carbon border border-graphite text-subtle">${p.area}</span>
+                                                <button onclick="deletePriority(${p.id})" class="text-subtle hover:text-red-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                            </div>
                                         </div>
                                     `).join('')}
                                 </div>
@@ -255,9 +251,9 @@
 
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div class="glass-panel rounded-2xl p-4 border border-graphite">
-                                    <p class="text-[10px] uppercase text-subtle font-semibold">Flujo de Caja Neto</p>
-                                    <p class="text-lg font-bold text-warmWhite mt-1">$${appState.finances.cashflow.toLocaleString()} MXN</p>
-                                    <span class="text-[10px] text-emerald-400 mt-1 block">Balance positivo consolidado</span>
+                                    <p class="text-[10px] uppercase text-subtle font-semibold">Flujo Neto Local</p>
+                                    <p class="text-lg font-bold text-warmWhite mt-1">$${netCash.toLocaleString()} MXN</p>
+                                    <span class="text-[10px] text-emerald-400 mt-1 block">Actualizado al instante</span>
                                 </div>
                                 <div class="glass-panel rounded-2xl p-4 border border-graphite">
                                     <p class="text-[10px] uppercase text-subtle font-semibold">Proyectos Activos</p>
@@ -265,9 +261,9 @@
                                     <span class="text-[10px] text-gold mt-1 block">FIDIUM & Empresas</span>
                                 </div>
                                 <div class="glass-panel rounded-2xl p-4 border border-graphite">
-                                    <p class="text-[10px] uppercase text-subtle font-semibold">Hábitos Diarios</p>
-                                    <p class="text-lg font-bold text-warmWhite mt-1">18 Días Racha</p>
-                                    <span class="text-[10px] text-emerald-400 mt-1 block">Disciplina constante</span>
+                                    <p class="text-[10px] uppercase text-subtle font-semibold">Ideas Registradas</p>
+                                    <p class="text-lg font-bold text-warmWhite mt-1">${appState.ideas.length} Oportunidades</p>
+                                    <span class="text-[10px] text-emerald-400 mt-1 block">Banco activo</span>
                                 </div>
                             </div>
                         </div>
@@ -276,10 +272,10 @@
                             <div>
                                 <div class="flex items-center gap-2 text-gold mb-3">
                                     <i data-lucide="bot" class="w-5 h-5"></i>
-                                    <h3 class="text-xs font-semibold uppercase tracking-wider">Director Estratégico IA</h3>
+                                    <h3 class="text-xs font-semibold uppercase tracking-wider">Director Estratégico IA Local</h3>
                                 </div>
                                 <p class="text-xs text-subtle leading-relaxed">
-                                    "La tracción en FIDIUM avanza de acuerdo con los plazos previstos. Se recomienda revisar los compromisos institucionales de la semana para evitar cruces con los módulos académicos en Chile."
+                                    "Analizando base de datos local: Tienes ${appState.projects.length} proyectos activos y un flujo neto de $${netCash.toLocaleString()} MXN. Se recomienda mantener el enfoque en las prioridades de FIDIUM Legal."
                                 </p>
                             </div>
                             <button onclick="switchModule('ai')" class="w-full py-2.5 bg-graphite hover:bg-graphite/80 border border-gold/40 rounded-xl text-xs font-semibold text-warmWhite transition flex items-center justify-center gap-2">
@@ -303,7 +299,10 @@
                                         <span class="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20">${i.status}</span>
                                     </div>
                                     <p class="text-xs text-subtle">Categoría: ${i.category}</p>
-                                    <p class="text-xs text-gold font-semibold">Potencial: ${i.potential}</p>
+                                    <div class="flex justify-between items-center pt-2 border-t border-graphite">
+                                        <span class="text-xs text-gold font-semibold">Potencial: ${i.potential}</span>
+                                        <button onclick="deleteIdea(${i.id})" class="text-subtle hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                    </div>
                                 </div>
                             `).join('')}
                         </div>
@@ -321,40 +320,67 @@
                                 <div class="glass-panel p-4 rounded-2xl border border-graphite flex justify-between items-center">
                                     <div>
                                         <h4 class="text-sm font-bold text-warmWhite">${p.title}</h4>
-                                        <p class="text-xs text-subtle mt-0.5">Cliente: ${p.client} • Presupuesto: ${p.budget}</p>
+                                        <p class="text-xs text-subtle mt-0.5">Cliente/Área: ${p.client} • Presupuesto: ${p.budget}</p>
                                     </div>
-                                    <span class="text-[10px] px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">${p.status}</span>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">${p.status}</span>
+                                        <button onclick="deleteProject(${p.id})" class="text-subtle hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                    </div>
                                 </div>
                             `).join('')}
                         </div>
                     </div>
                 `;
             } else if (appState.activeModule === 'finances') {
+                const totalInc = appState.finances.transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + t.amount, 0);
+                const totalExp = appState.finances.transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
+                
                 mainContent.innerHTML = `
                     <div class="space-y-4">
-                        <h2 class="text-sm font-bold uppercase tracking-wider text-warmWhite">Centro Financiero Consolidado</h2>
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-sm font-bold uppercase tracking-wider text-warmWhite">Centro Financiero Consolidado</h2>
+                            <button onclick="openModal('transaction')" class="px-3 py-1.5 bg-gold text-deep font-semibold text-xs rounded-xl hover:bg-goldHover transition">Registrar Transacción</button>
+                        </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div class="glass-panel p-4 rounded-2xl border border-graphite">
                                 <span class="text-xs text-subtle">Ingresos Totales</span>
-                                <p class="text-xl font-bold text-emerald-400 mt-1">$${appState.finances.income.toLocaleString()} MXN</p>
+                                <p class="text-xl font-bold text-emerald-400 mt-1">$${totalInc.toLocaleString()} MXN</p>
                             </div>
                             <div class="glass-panel p-4 rounded-2xl border border-graphite">
                                 <span class="text-xs text-subtle">Gastos Operativos</span>
-                                <p class="text-xl font-bold text-red-400 mt-1">$${appState.finances.expenses.toLocaleString()} MXN</p>
+                                <p class="text-xl font-bold text-red-400 mt-1">$${totalExp.toLocaleString()} MXN</p>
                             </div>
                             <div class="glass-panel p-4 rounded-2xl border border-graphite">
                                 <span class="text-xs text-subtle">Flujo Neto</span>
-                                <p class="text-xl font-bold text-gold mt-1">$${appState.finances.cashflow.toLocaleString()} MXN</p>
+                                <p class="text-xl font-bold text-gold mt-1">$${(totalInc - totalExp).toLocaleString()} MXN</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-2xl border border-graphite space-y-3 mt-6">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-subtle">Historial de Transacciones</h3>
+                            <div class="space-y-2">
+                                ${appState.finances.transactions.map(tx => `
+                                    <div class="flex justify-between items-center p-3 rounded-xl bg-deep border border-graphite text-xs">
+                                        <div>
+                                            <p class="font-medium text-warmWhite">${tx.desc}</p>
+                                            <span class="text-[10px] text-subtle">${tx.date}</span>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <span class="font-bold ${tx.type === 'income' ? 'text-emerald-400' : 'text-red-400'}">${tx.type === 'income' ? '+' : '-'}$${tx.amount.toLocaleString()} MXN</span>
+                                            <button onclick="deleteTransaction(${tx.id})" class="text-subtle hover:text-red-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                        </div>
+                                    </div>
+                                `).join('')}
                             </div>
                         </div>
                     </div>
                 `;
             } else if (appState.activeModule === 'ai') {
                 mainContent.innerHTML = `
-                    <div class="flex flex-col h-full space-y-4">
+                    <div class="flex flex-col h-[calc(100vh-8rem)] space-y-4">
                         <div class="flex items-center gap-2 pb-2 border-b border-graphite">
                             <i data-lucide="bot" class="w-5 h-5 text-gold"></i>
-                            <h2 class="text-sm font-bold uppercase tracking-wider text-warmWhite">Director Estratégico IA</h2>
+                            <h2 class="text-sm font-bold uppercase tracking-wider text-warmWhite">Director Estratégico IA (Simulador Local)</h2>
                         </div>
                         <div id="chat-stream" class="flex-1 overflow-y-auto space-y-3 pr-2">
                             ${appState.aiChat.map(msg => `
@@ -366,7 +392,7 @@
                             `).join('')}
                         </div>
                         <div class="flex gap-2 pt-2">
-                            <input type="text" id="ai-input" placeholder="Consulte al Director IA sobre finanzas, proyectos o estrategia..." class="flex-1 bg-carbon border border-graphite rounded-xl px-4 py-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                            <input type="text" id="ai-input" placeholder="Pregúntale al Director IA sobre tus proyectos, finanzas o prioridades..." class="flex-1 bg-carbon border border-graphite rounded-xl px-4 py-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold" onkeypress="if(event.key === 'Y' || event.key === 'Enter') sendAIChat()">
                             <button onclick="sendAIChat()" class="px-5 py-2.5 bg-gold text-deep font-semibold text-xs rounded-xl hover:bg-goldHover transition">Enviar</button>
                         </div>
                     </div>
@@ -378,7 +404,7 @@
                             <i data-lucide="layers" class="w-6 h-6"></i>
                         </div>
                         <h2 class="text-lg font-bold capitalize text-warmWhite">Módulo ${appState.activeModule}</h2>
-                        <p class="text-xs text-subtle max-w-sm">Estructura operativa inicializada y conectada al núcleo de FALCÓN OS.</p>
+                        <p class="text-xs text-subtle max-w-sm">Estructura operativa lista para almacenar y administrar tus registros de forma local y persistente.</p>
                     </div>
                 `;
             }
@@ -386,27 +412,45 @@
             lucide.createIcons();
         }
 
-        // Control de Modales y Formularios
+        // Gestión de Modales Formularios
         function openModal(type) {
             document.getElementById('modal-backdrop').classList.remove('hidden');
             const titleEl = document.getElementById('modal-title');
             const bodyEl = document.getElementById('modal-body');
 
-            if (type === 'idea') {
+            if (type === 'quick' || type === 'priority') {
+                titleEl.innerText = 'Nueva Prioridad Estratégica';
+                bodyEl.innerHTML = `
+                    <input type="text" id="p-text" placeholder="Descripción de la prioridad..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="p-area" placeholder="Área (Ej: FIDIUM, CGE)..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <button onclick="savePriority()" class="w-full py-2.5 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Prioridad</button>
+                `;
+            } else if (type === 'idea') {
                 titleEl.innerText = 'Registrar Nueva Idea';
                 bodyEl.innerHTML = `
                     <input type="text" id="idea-name" placeholder="Nombre de la idea..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
-                    <input type="text" id="idea-cat" placeholder="Categoría (Ej: Legal Tech)..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="idea-cat" placeholder="Categoría..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
                     <input type="text" id="idea-pot" placeholder="Potencial económico..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
-                    <button onclick="saveNewIdea()" class="w-full py-2.5 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Idea</button>
+                    <button onclick="saveIdea()" class="w-full py-2.5 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Idea</button>
                 `;
             } else if (type === 'project') {
                 titleEl.innerText = 'Registrar Nuevo Proyecto';
                 bodyEl.innerHTML = `
                     <input type="text" id="proj-title" placeholder="Título del proyecto..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
-                    <input type="text" id="proj-client" placeholder="Cliente o área..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="proj-client" placeholder="Cliente / Área..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
                     <input type="text" id="proj-budget" placeholder="Presupuesto ($)..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
-                    <button onclick="saveNewProject()" class="w-full py-2.5 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Proyecto</button>
+                    <button onclick="saveProject()" class="w-full py-2.5 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Proyecto</button>
+                `;
+            } else if (type === 'transaction') {
+                titleEl.innerText = 'Registrar Transacción Financiera';
+                bodyEl.innerHTML = `
+                    <select id="tx-type" class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                        <option value="income">Ingreso</option>
+                        <option value="expense">Gasto</option>
+                    </select>
+                    <input type="text" id="tx-desc" placeholder="Descripción..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="number" id="tx-amount" placeholder="Monto ($)..." class="w-full bg-carbon border border-graphite rounded-xl p-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <button onclick="saveTransaction()" class="w-full py-2.5 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Registrar Transacción</button>
                 `;
             }
         }
@@ -415,7 +459,22 @@
             document.getElementById('modal-backdrop').classList.add('hidden');
         }
 
-        function saveNewIdea() {
+        // Operaciones de Datos Locales
+        function savePriority() {
+            const text = document.getElementById('p-text').value;
+            const area = document.getElementById('p-area').value;
+            if(!text) return;
+            appState.priorities.push({ id: Date.now(), text, area: area || 'General', status: 'pending' });
+            saveState();
+            closeModal();
+        }
+
+        function deletePriority(id) {
+            appState.priorities = appState.priorities.filter(p => p.id !== id);
+            saveState();
+        }
+
+        function saveIdea() {
             const name = document.getElementById('idea-name').value;
             const category = document.getElementById('idea-cat').value;
             const potential = document.getElementById('idea-pot').value;
@@ -425,7 +484,12 @@
             closeModal();
         }
 
-        function saveNewProject() {
+        function deleteIdea(id) {
+            appState.ideas = appState.ideas.filter(i => i.id !== id);
+            saveState();
+        }
+
+        function saveProject() {
             const title = document.getElementById('proj-title').value;
             const client = document.getElementById('proj-client').value;
             const budget = document.getElementById('proj-budget').value;
@@ -435,19 +499,53 @@
             closeModal();
         }
 
+        function deleteProject(id) {
+            appState.projects = appState.projects.filter(p => p.id !== id);
+            saveState();
+        }
+
+        function saveTransaction() {
+            const type = document.getElementById('tx-type').value;
+            const desc = document.getElementById('tx-desc').value;
+            const amount = parseFloat(document.getElementById('tx-amount').value);
+            if(!desc || isNaN(amount)) return;
+            appState.finances.transactions.push({ id: Date.now(), type, desc, amount, date: new Date().toISOString().split('T')[0] });
+            saveState();
+            closeModal();
+        }
+
+        function deleteTransaction(id) {
+            appState.finances.transactions = appState.finances.transactions.filter(t => t.id !== id);
+            saveState();
+        }
+
         function sendAIChat() {
             const input = document.getElementById('ai-input');
-            const text = input.value.trim();
+            const text = input ? input.value.trim() : '';
             if(!text) return;
+
             appState.aiChat.push({ sender: 'user', text });
-            appState.aiChat.push({ sender: 'ai', text: `Análisis estratégico recibido para: "${text}". Mis métricas confirman viabilidad operativa. Sugiero enfocar recursos en la priorización actual.` });
-            input.value = '';
+
+            // Lógica de respuesta inteligente basada en datos locales reales de la app
+            let aiReply = `He procesado tu consulta sobre "${text}". Siguiendo los principios de FALCÓN OS, te sugiero alinear esta directriz con tus prioridades activas en FIDIUM Legal.`;
+            
+            const lower = text.toLowerCase();
+            if(lower.includes('proyecto') || lower.includes('proyectos')) {
+                aiReply = `Actualmente tienes ${appState.projects.length} proyectos activos registrados en el sistema. Asegúrate de que cada uno tenga asignada su próxima acción inmediata.`;
+            } else if(lower.includes('dinero') || lower.includes('finanza') || lower.includes('ingreso')) {
+                const inc = appState.finances.transactions.filter(t => t.type === 'income').reduce((a,b)=>a+b.amount,0);
+                const exp = appState.finances.transactions.filter(t => t.type === 'expense').reduce((a,b)=>a+b.amount,0);
+                aiReply = `Tu flujo de caja actual registra ingresos por $${inc.toLocaleString()} MXN y gastos por $${exp.toLocaleString()} MXN (Flujo neto: $${(inc-exp).toLocaleString()} MXN).`;
+            }
+
+            appState.aiChat.push({ sender: 'ai', text: aiReply });
             saveState();
+
             const stream = document.getElementById('chat-stream');
             if(stream) stream.scrollTop = stream.scrollHeight;
         }
 
-        // Inicialización
+        // Inicializar interfaz
         renderApp();
     </script>
 </body>
