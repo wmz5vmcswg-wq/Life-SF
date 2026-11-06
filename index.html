@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>AURA Life OS | Executive Control</title>
+    <title>FIDIUM | Control Ejecutivo</title>
     
     <!-- PWA & Apple Web App Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="AURA OS">
+    <meta name="apple-mobile-web-app-title" content="FIDIUM OS">
     <meta name="theme-color" content="#000000">
 
     <!-- Tailwind CSS CDN -->
@@ -19,11 +19,11 @@
             theme: {
                 extend: {
                     colors: {
-                        pitch: '#050505',
-                        card: '#0D0D0E',
-                        border: '#1E1E22',
-                        accent: '#E6B800',
-                        accentDark: '#B38F00',
+                        pitch: '#080808',
+                        card: '#121214',
+                        border: '#27272A',
+                        accentRed: '#DC2626',
+                        accentRedHover: '#B91C1C',
                         subtle: '#A1A1AA'
                     },
                     fontFamily: {
@@ -43,10 +43,10 @@
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
         }
         .glass-card {
-            background: rgba(13, 13, 14, 0.85);
+            background: rgba(18, 18, 20, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.15);
         }
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
@@ -57,176 +57,164 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between pb-24 pt-12 px-4 max-w-md mx-auto relative select-none">
+<body class="min-h-screen flex flex-col justify-between pb-28 pt-8 px-4 sm:px-8 max-w-2xl sm:max-w-4xl mx-auto relative select-none">
 
     <!-- HEADER / PROFILE -->
-    <header class="flex justify-between items-center mb-6">
+    <header class="flex justify-between items-center mb-6 border-b border-border pb-4">
         <div>
-            <p class="text-xs font-semibold text-accent uppercase tracking-widest" id="live-date">Cargando fecha...</p>
-            <h1 class="text-2xl font-bold tracking-tight text-white mt-0.5">AURA OS</h1>
+            <p class="text-xs font-semibold text-accentRed uppercase tracking-widest" id="live-date">Cargando fecha...</p>
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-0.5">FIDIUM <span class="text-accentRed">Legal OS</span></h1>
         </div>
         <div class="flex items-center gap-3">
-            <button onclick="exportToAppleCalendar()" class="p-2.5 rounded-full glass-card text-accent hover:bg-accent/10 transition active:scale-95" title="Exportar a Apple Calendar">
+            <button onclick="exportToAppleCalendar()" class="p-2.5 rounded-full glass-card text-accentRed hover:bg-accentRed/10 transition active:scale-95" title="Sincronizar Apple Calendar">
                 <i data-lucide="calendar"></i>
             </button>
-            <div class="w-10 h-10 rounded-full border border-accent/40 flex items-center justify-center font-bold text-sm bg-card text-accent shadow-lg shadow-accent/10">
-                SF
+            <div class="w-10 h-10 rounded-full border border-accentRed/40 flex items-center justify-center font-bold text-sm bg-card text-accentRed shadow-lg shadow-accentRed/20">
+                FD
             </div>
         </div>
     </header>
 
-    <!-- AREA FILTERS / NAVIGATION -->
+    <!-- NAVIGATION TABS -->
     <nav class="flex gap-2 overflow-x-auto hide-scrollbar mb-6 pb-1">
-        <button onclick="filterArea('all')" class="area-btn active-area px-4 py-2 rounded-full text-xs font-medium border border-accent bg-accent text-black transition shrink-0" data-area="all">
-            General
+        <button onclick="switchTab('dashboard')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-accentRed bg-accentRed text-white transition shrink-0" data-tab="dashboard">
+            Dashboard General
         </button>
-        <button onclick="filterArea('CGE')" class="area-btn px-4 py-2 rounded-full text-xs font-medium border border-border bg-card text-subtle transition shrink-0" data-area="CGE">
-            CGE / Institucional
+        <button onclick="switchTab('clients')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-border bg-card text-subtle transition shrink-0" data-tab="clients">
+            Clientes & Pagos
         </button>
-        <button onclick="filterArea('FIDIUM')" class="area-btn px-4 py-2 rounded-full text-xs font-medium border border-border bg-card text-subtle transition shrink-0" data-area="FIDIUM">
-            FIDIUM Legal
+        <button onclick="switchTab('projects')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-border bg-card text-subtle transition shrink-0" data-tab="projects">
+            Proyectos & Servicios
         </button>
-        <button onclick="filterArea('Empresas')" class="area-btn px-4 py-2 rounded-full text-xs font-medium border border-border bg-card text-subtle transition shrink-0" data-area="Empresas">
-            Reyno & Impeweb
-        </button>
-        <button onclick="filterArea('Rendimiento')" class="area-btn px-4 py-2 rounded-full text-xs font-medium border border-border bg-card text-subtle transition shrink-0" data-area="Rendimiento">
-            Alto Rendimiento
+        <button onclick="switchTab('journal')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-border bg-card text-subtle transition shrink-0" data-tab="journal">
+            Diario de Ideas
         </button>
     </nav>
 
-    <!-- MAIN DASHBOARD CONTENT -->
-    <main class="space-y-6 flex-1">
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 space-y-6">
 
-        <!-- METRIC SUMMARY CARD -->
-        <section class="glass-card rounded-3xl p-5 border border-border shadow-xl">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <span class="text-xs text-subtle font-medium">Ejecución del Día</span>
-                    <h2 class="text-xl font-bold text-white mt-0.5" id="completion-rate">0% Completado</h2>
+        <!-- TAB 1: DASHBOARD -->
+        <div id="tab-dashboard" class="space-y-6 tab-content">
+            <!-- Summary Metric Card -->
+            <div class="glass-card rounded-3xl p-6 border border-border shadow-xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="text-xs text-subtle font-medium">Estado del Negocio</span>
+                        <h2 class="text-xl font-bold text-white mt-0.5" id="summary-status">Control Activo</h2>
+                    </div>
+                    <div class="p-2 rounded-xl bg-accentRed/10 text-accentRed">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
                 </div>
-                <div class="p-2 rounded-xl bg-accent/10 text-accent">
-                    <i data-lucide="zap" class="w-5 h-5"></i>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 border-t border-border">
+                    <div>
+                        <span class="text-[11px] text-subtle">Clientes Totales</span>
+                        <p class="text-lg font-bold text-white" id="stat-clients">0</p>
+                    </div>
+                    <div>
+                        <span class="text-[11px] text-subtle">Proyectos Activos</span>
+                        <p class="text-lg font-bold text-white" id="stat-projects">0</p>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <span class="text-[11px] text-subtle">Pagos Pendientes</span>
+                        <p class="text-lg font-bold text-accentRed" id="stat-pending">$0.00</p>
+                    </div>
                 </div>
             </div>
-            <!-- Progress Bar -->
-            <div class="w-full bg-border h-2.5 rounded-full overflow-hidden">
-                <div id="progress-bar" class="bg-accent h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
-            </div>
-        </section>
 
-        <!-- HIGH PERFORMANCE / DAILY HABITS -->
-        <section class="space-y-3" id="habits-section">
+            <!-- Quick Agenda & Reminders -->
+            <div class="space-y-3">
+                <div class="flex justify-between items-center px-1">
+                    <h3 class="text-xs font-semibold tracking-wider text-subtle uppercase">Agenda & Recordatorios Clave</h3>
+                    <button onclick="openModal('reminder')" class="text-xs text-accentRed hover:underline flex items-center gap-1 font-semibold">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Nuevo Recordatorio
+                    </button>
+                </div>
+                <div id="reminders-container" class="space-y-2.5">
+                    <!-- Dinámico -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: CLIENTES Y PAGOS -->
+        <div id="tab-clients" class="space-y-6 tab-content hidden">
             <div class="flex justify-between items-center px-1">
-                <h3 class="text-sm font-semibold tracking-wider text-subtle uppercase">Hábitos & Rutinas</h3>
-                <span class="text-xs text-accent font-medium">6:00 AM Routine</span>
-            </div>
-
-            <div id="habits-container" class="space-y-2.5">
-                <!-- Dynamic Habits inserted by JS -->
-            </div>
-        </section>
-
-        <!-- PROJECTS & KANBAN TASKS -->
-        <section class="space-y-3" id="tasks-section">
-            <div class="flex justify-between items-center px-1">
-                <h3 class="text-sm font-semibold tracking-wider text-subtle uppercase">Proyectos & Prioridades</h3>
-                <button onclick="openAddTaskModal()" class="text-xs text-accent hover:underline flex items-center gap-1 font-medium">
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> Nueva Tarea
+                <h3 class="text-xs font-semibold tracking-wider text-subtle uppercase">Base de Datos de Clientes</h3>
+                <button onclick="openModal('client')" class="px-3 py-1.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 flex items-center gap-1">
+                    <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Agregar Cliente
                 </button>
             </div>
-
-            <div id="tasks-container" class="space-y-2.5">
-                <!-- Dynamic Tasks inserted by JS -->
+            <div id="clients-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Dinámico -->
             </div>
-        </section>
+        </div>
 
-        <!-- APPLE & SIRI INTEGRATION BANNER -->
-        <section class="glass-card rounded-2xl p-4 border border-accent/20 bg-gradient-to-r from-card to-accent/5">
-            <div class="flex items-center gap-3">
-                <div class="p-2.5 rounded-xl bg-accent text-black font-bold">
-                    <i data-lucide="mic" class="w-5 h-5"></i>
-                </div>
-                <div class="flex-1">
-                    <h4 class="text-sm font-semibold text-white">Comandos de Siri & Atajos</h4>
-                    <p class="text-xs text-subtle mt-0.5">Sincroniza eventos y registra hábitos por voz.</p>
-                </div>
-                <button onclick="generateSiriShortcutHelp()" class="px-3 py-1.5 rounded-lg border border-accent/40 text-accent text-xs font-semibold hover:bg-accent/10 transition">
-                    Ver Atajo
+        <!-- TAB 3: PROYECTOS Y SERVICIOS -->
+        <div id="tab-projects" class="space-y-6 tab-content hidden">
+            <div class="flex justify-between items-center px-1">
+                <h3 class="text-xs font-semibold tracking-wider text-subtle uppercase">Seguimiento de Servicios & Proyectos</h3>
+                <button onclick="openModal('project')" class="px-3 py-1.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 flex items-center gap-1">
+                    <i data-lucide="folder-plus" class="w-3.5 h-3.5"></i> Nuevo Proyecto
                 </button>
             </div>
-        </section>
+            <div id="projects-container" class="space-y-3">
+                <!-- Dinámico -->
+            </div>
+        </div>
+
+        <!-- TAB 4: DIARIO DE IDEAS -->
+        <div id="tab-journal" class="space-y-4 tab-content hidden">
+            <div class="flex justify-between items-center px-1">
+                <h3 class="text-xs font-semibold tracking-wider text-subtle uppercase">Libreta de Ideas & Notas Rápidas</h3>
+                <span class="text-[11px] text-subtle">Guardado automático</span>
+            </div>
+            <div class="glass-card rounded-2xl p-4 border border-border">
+                <textarea id="journal-input" oninput="saveJournal()" placeholder="Escribe aquí ideas de negocio, estrategias legales, apuntes o reflexiones rápidas..." class="w-full h-64 bg-transparent border-none text-sm text-white focus:outline-none resize-none"></textarea>
+            </div>
+        </div>
 
     </main>
 
-    <!-- FLOATING QUICK ADD BUTTON -->
-    <div class="fixed bottom-6 right-6 left-6 max-w-md mx-auto flex justify-end pointer-events-none z-40">
-        <button onclick="openAddTaskModal()" class="pointer-events-auto bg-accent text-black p-4 rounded-full shadow-2xl shadow-accent/40 active:scale-95 transition flex items-center justify-center font-bold">
-            <i data-lucide="plus" class="w-6 h-6"></i>
-        </button>
-    </div>
-
-    <!-- MODAL NUEVA TAREA / EVENTO -->
-    <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-4">
-        <div class="glass-card w-full max-w-sm rounded-3xl p-6 border border-border space-y-4">
+    <!-- MODAL GENERAL -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-md rounded-3xl p-6 border border-border space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-bold text-white">Nueva Prioridad</h3>
-                <button onclick="closeAddTaskModal()" class="text-subtle hover:text-white">
+                <h3 id="modal-title" class="text-lg font-bold text-white">Nuevo Registro</h3>
+                <button onclick="closeModal()" class="text-subtle hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
             
-            <form id="task-form" onsubmit="saveTask(event)" class="space-y-3">
-                <div>
-                    <label class="text-xs text-subtle block mb-1">Título</label>
-                    <input type="text" id="task-title" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accent">
-                </div>
-                
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="text-xs text-subtle block mb-1">Área</label>
-                        <select id="task-area" class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accent">
-                            <option value="CGE">CGE / Institucional</option>
-                            <option value="FIDIUM">FIDIUM Legal</option>
-                            <option value="Empresas">Reyno & Impeweb</option>
-                            <option value="Rendimiento">Alto Rendimiento</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="text-xs text-subtle block mb-1">Hora / Tiempo</label>
-                        <input type="text" id="task-time" placeholder="Ej: 06:00 AM" class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accent">
-                    </div>
-                </div>
-
-                <div class="pt-2 flex gap-3">
-                    <button type="button" onclick="closeAddTaskModal()" class="flex-1 py-2.5 rounded-xl border border-border text-subtle text-xs font-semibold">Cancelar</button>
-                    <button type="submit" class="flex-1 py-2.5 rounded-xl bg-accent text-black text-xs font-bold shadow-lg shadow-accent/20">Guardar</button>
-                </div>
+            <form id="dynamic-form" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                <!-- Los campos se cargan dinámicamente -->
             </form>
         </div>
     </div>
 
     <!-- JAVASCRIPT APP ENGINE -->
     <script>
-        // Data Schema with LocalStorage Persistence
+        // Default State for FIDIUM Legal Startup
         const defaultState = {
-            activeFilter: 'all',
-            habits: [
-                { id: 'h1', title: 'Entrenamiento de Fuerza (6:00 AM)', area: 'Rendimiento', done: false },
-                { id: 'h2', title: 'Nutrición Alta en Proteína', area: 'Rendimiento', done: false },
-                { id: 'h3', title: 'Artes Marciales / Cardio', area: 'Rendimiento', done: false },
-                { id: 'h4', title: 'Revisión Agenda CGE', area: 'CGE', done: false }
+            activeTab: 'dashboard',
+            modalType: null,
+            reminders: [
+                { id: 'r1', title: 'Revisión de contratos iniciales - Cliente A', time: '10:00 AM', done: false },
+                { id: 'r2', title: 'Seguimiento registro de marca INAPI/IMPI', time: '04:00 PM', done: false }
             ],
-            tasks: [
-                { id: 't1', title: 'Registro Marcas & Asesoría Legal', area: 'FIDIUM', time: '10:00 AM', status: 'pending' },
-                { id: 't2', title: 'Reunión Operativa Impeweb / Reyno', area: 'Empresas', time: '02:00 PM', status: 'pending' },
-                { id: 't3', title: 'Sesión de Consejo General Estudiantil', area: 'CGE', time: '05:00 PM', status: 'pending' }
-            ]
+            clients: [
+                { id: 'c1', name: 'Empresa Alfa S.A.', service: 'Constitución Legal', amount: '$4,500 MXN', status: 'Pagado', phone: '+52 477 000 0000' }
+            ],
+            projects: [
+                { id: 'p1', title: 'Registro de Marca Comercial', client: 'Empresa Alfa S.A.', status: 'En Proceso', deadline: '2026-11-20' }
+            ],
+            journal: ''
         };
 
-        let appState = JSON.parse(localStorage.getItem('aura_state')) || defaultState;
+        let appState = JSON.parse(localStorage.getItem('fidium_state')) || defaultState;
 
         function saveState() {
-            localStorage.setItem('aura_state', JSON.stringify(appState));
+            localStorage.setItem('fidium_state', JSON.stringify(appState));
             render();
         }
 
@@ -236,143 +224,188 @@
             document.getElementById('live-date').innerText = now.toLocaleDateString('es-ES', options);
         }
 
-        function filterArea(area) {
-            appState.activeFilter = area;
-            document.querySelectorAll('.area-btn').forEach(btn => {
-                if(btn.dataset.area === area) {
-                    btn.className = "area-btn active-area px-4 py-2 rounded-full text-xs font-medium border border-accent bg-accent text-black transition shrink-0";
+        function switchTab(tabId) {
+            appState.activeTab = tabId;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if(btn.dataset.tab === tabId) {
+                    btn.className = "tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-accentRed bg-accentRed text-white transition shrink-0";
                 } else {
-                    btn.className = "area-btn px-4 py-2 rounded-full text-xs font-medium border border-border bg-card text-subtle transition shrink-0";
+                    btn.className = "tab-btn px-4 py-2 rounded-xl text-xs font-semibold border border-border bg-card text-subtle transition shrink-0";
                 }
             });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
             render();
         }
 
-        function toggleHabit(id) {
-            const habit = appState.habits.find(h => h.id === id);
-            if (habit) habit.done = !habit.done;
-            saveState();
-        }
-
-        function toggleTaskStatus(id) {
-            const task = appState.tasks.find(t => t.id === id);
-            if (task) {
-                task.status = task.status === 'completed' ? 'pending' : 'completed';
-            }
-            saveState();
-        }
-
-        function deleteTask(id) {
-            appState.tasks = appState.tasks.filter(t => t.id !== id);
-            saveState();
-        }
-
         function render() {
-            const habitContainer = document.getElementById('habits-container');
-            const taskContainer = document.getElementById('tasks-container');
+            // Stats
+            document.getElementById('stat-clients').innerText = appState.clients.length;
+            document.getElementById('stat-projects').innerText = appState.projects.length;
+            document.getElementById('stat-pending').innerText = `$${appState.clients.filter(c => c.status === 'Pendiente').length * 2500}.00`;
+            document.getElementById('journal-input').value = appState.journal || '';
 
-            // Render Habits
-            const filteredHabits = appState.activeFilter === 'all' 
-                ? appState.habits 
-                : appState.habits.filter(h => h.area === appState.activeFilter);
-
-            habitContainer.innerHTML = filteredHabits.map(h => `
-                <div onclick="toggleHabit('${h.id}')" class="glass-card p-3.5 rounded-2xl flex items-center justify-between border border-border cursor-pointer active:scale-98 transition">
+            // Render Reminders
+            const remContainer = document.getElementById('reminders-container');
+            remContainer.innerHTML = appState.reminders.map(r => `
+                <div onclick="toggleReminder('${r.id}')" class="glass-card p-3.5 rounded-2xl flex items-center justify-between border border-border cursor-pointer active:scale-98 transition">
                     <div class="flex items-center gap-3">
-                        <div class="w-5 h-5 rounded-full border border-accent flex items-center justify-center ${h.done ? 'bg-accent text-black' : ''}">
-                            ${h.done ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
+                        <div class="w-5 h-5 rounded-full border border-accentRed flex items-center justify-center ${r.done ? 'bg-accentRed text-white' : ''}">
+                            ${r.done ? '<i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>' : ''}
                         </div>
-                        <span class="text-xs font-medium ${h.done ? 'line-through text-subtle' : 'text-white'}">${h.title}</span>
+                        <span class="text-xs font-medium ${r.done ? 'line-through text-subtle' : 'text-white'}">${r.title}</span>
                     </div>
-                    <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md border border-border text-subtle bg-pitch">${h.area}</span>
+                    <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md border border-border text-subtle bg-pitch">${r.time}</span>
                 </div>
             `).join('');
 
-            // Render Tasks
-            const filteredTasks = appState.activeFilter === 'all' 
-                ? appState.tasks 
-                : appState.tasks.filter(t => t.area === appState.activeFilter);
+            // Render Clients
+            const clientContainer = document.getElementById('clients-container');
+            clientContainer.innerHTML = appState.clients.map(c => `
+                <div class="glass-card p-4 rounded-2xl border border-border space-y-2">
+                    <div class="flex justify-between items-start">
+                        <h4 class="text-sm font-bold text-white">${c.name}</h4>
+                        <span class="text-[10px] px-2 py-0.5 rounded font-semibold ${c.status === 'Pagado' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}">${c.status}</span>
+                    </div>
+                    <p class="text-xs text-subtle"><strong class="text-white">Servicio:</strong> ${c.service}</p>
+                    <div class="flex justify-between items-center pt-2 border-t border-border text-xs">
+                        <span class="text-accentRed font-semibold">${c.amount}</span>
+                        <button onclick="deleteClient('${c.id}')" class="text-subtle hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+            `).join('');
 
-            taskContainer.innerHTML = filteredTasks.map(t => `
+            // Render Projects
+            const projContainer = document.getElementById('projects-container');
+            projContainer.innerHTML = appState.projects.map(p => `
                 <div class="glass-card p-4 rounded-2xl border border-border flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <button onclick="toggleTaskStatus('${t.id}')" class="w-5 h-5 rounded-md border border-border flex items-center justify-center ${t.status === 'completed' ? 'bg-accent text-black border-accent' : 'text-transparent'}">
-                            <i data-lucide="check" class="w-3.5 h-3.5 stroke-[3]"></i>
-                        </button>
-                        <div>
-                            <p class="text-xs font-medium ${t.status === 'completed' ? 'line-through text-subtle' : 'text-white'}">${t.title}</p>
-                            <span class="text-[10px] text-subtle flex items-center gap-1 mt-0.5">
-                                <i data-lucide="clock" class="w-3 h-3"></i> ${t.time || 'Hoy'} • ${t.area}
-                            </span>
-                        </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">${p.title}</h4>
+                        <p class="text-xs text-subtle mt-0.5">Cliente: ${p.client} • Vence: ${p.deadline}</p>
                     </div>
-                    <button onclick="deleteTask('${t.id}')" class="text-subtle hover:text-red-400 p-1">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
+                    <div class="flex items-center gap-3">
+                        <span class="text-[10px] px-2.5 py-1 rounded-lg bg-accentRed/10 text-accentRed font-semibold border border-accentRed/20">${p.status}</span>
+                        <button onclick="deleteProject('${p.id}')" class="text-subtle hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </div>
                 </div>
             `).join('');
-
-            // Progress Metrics
-            const totalItems = appState.habits.length + appState.tasks.length;
-            const completedItems = appState.habits.filter(h => h.done).length + appState.tasks.filter(t => t.status === 'completed').length;
-            const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
-
-            document.getElementById('completion-rate').innerText = `${percentage}% Completado`;
-            document.getElementById('progress-bar').style.width = `${percentage}%`;
 
             lucide.createIcons();
         }
 
-        // Modal Handlers
-        function openAddTaskModal() {
+        // Modals Handler
+        function openModal(type) {
+            appState.modalType = type;
             document.getElementById('modal-backdrop').classList.remove('hidden');
+            const titleEl = document.getElementById('modal-title');
+            const formEl = document.getElementById('dynamic-form');
+
+            if(type === 'reminder') {
+                titleEl.innerText = 'Nuevo Recordatorio';
+                formEl.innerHTML = `
+                    <div><label class="text-xs text-subtle block mb-1">Título</label><input type="text" id="m-title" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
+                    <div><label class="text-xs text-subtle block mb-1">Hora</label><input type="text" id="m-time" placeholder="Ej: 09:00 AM" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 mt-2">Guardar Recordatorio</button>
+                `;
+            } else if(type === 'client') {
+                titleEl.innerText = 'Registrar Cliente';
+                formEl.innerHTML = `
+                    <div><label class="text-xs text-subtle block mb-1">Nombre del Cliente / Empresa</label><input type="text" id="c-name" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
+                    <div><label class="text-xs text-subtle block mb-1">Servicio Legal Prestado</label><input type="text" id="c-service" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="text-xs text-subtle block mb-1">Monto ($)</label><input type="text" id="c-amount" placeholder="$0.00" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
+                        <div><label class="text-xs text-subtle block mb-1">Estatus Pago</label><select id="c-status" class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"><option value="Pagado">Pagado</option><option value="Pendiente">Pendiente</option></select></div>
+                    </div>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 mt-2">Guardar Cliente</button>
+                `;
+            } else if(type === 'project') {
+                titleEl.innerText = 'Nuevo Proyecto / Asesoría';
+                formEl.innerHTML = `
+                    <div><label class="text-xs text-subtle block mb-1">Nombre del Proyecto / Trámite</label><input type="text" id="p-title" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
+                    <div><label class="text-xs text-subtle block mb-1">Cliente Asociado</label><input type="text" id="p-client" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><label class="text-xs text-subtle block mb-1">Estatus</label><select id="p-status" class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"><option value="En Proceso">En Proceso</option><option value="Completado">Completado</option></select></div>
+                        <div><label class="text-xs text-subtle block mb-1">Fecha Límite</label><input type="date" id="p-deadline" required class="w-full bg-pitch border border-border rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accentRed"></div>
+                    </div>
+                    <button type="submit" class="w-full py-2.5 rounded-xl bg-accentRed text-white text-xs font-bold shadow-lg shadow-accentRed/20 mt-2">Guardar Proyecto</button>
+                `;
+            }
         }
 
-        function closeAddTaskModal() {
+        function closeModal() {
             document.getElementById('modal-backdrop').classList.add('hidden');
         }
 
-        function saveTask(e) {
+        function handleFormSubmit(e) {
             e.preventDefault();
-            const title = document.getElementById('task-title').value;
-            const area = document.getElementById('task-area').value;
-            const time = document.getElementById('task-time').value;
-
-            appState.tasks.push({
-                id: 't_' + Date.now(),
-                title,
-                area,
-                time,
-                status: 'pending'
-            });
-
+            if(appState.modalType === 'reminder') {
+                appState.reminders.push({
+                    id: 'r_' + Date.now(),
+                    title: document.getElementById('m-title').value,
+                    time: document.getElementById('m-time').value,
+                    done: false
+                });
+            } else if(appState.modalType === 'client') {
+                appState.clients.push({
+                    id: 'c_' + Date.now(),
+                    name: document.getElementById('c-name').value,
+                    service: document.getElementById('c-service').value,
+                    amount: document.getElementById('c-amount').value,
+                    status: document.getElementById('c-status').value
+                });
+            } else if(appState.modalType === 'project') {
+                appState.projects.push({
+                    id: 'p_' + Date.now(),
+                    title: document.getElementById('p-title').value,
+                    client: document.getElementById('p-client').value,
+                    status: document.getElementById('p-status').value,
+                    deadline: document.getElementById('p-deadline').value
+                });
+            }
             saveState();
-            closeAddTaskModal();
-            document.getElementById('task-form').reset();
+            closeModal();
         }
 
-        // Export Apple Calendar (.ics)
+        function toggleReminder(id) {
+            const rem = appState.reminders.find(r => r.id === id);
+            if(rem) rem.done = !rem.done;
+            saveState();
+        }
+
+        function deleteClient(id) {
+            appState.clients = appState.clients.filter(c => c.id !== id);
+            saveState();
+        }
+
+        function deleteProject(id) {
+            appState.projects = appState.projects.filter(p => p.id !== id);
+            saveState();
+        }
+
+        function saveJournal() {
+            appState.journal = document.getElementById('journal-input').value;
+            localStorage.setItem('fidium_state', JSON.stringify(appState));
+        }
+
         function exportToAppleCalendar() {
-            let icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//AURA OS//SF//ES\n";
-            appState.tasks.forEach(t => {
-                icsContent += `BEGIN:VEVENT\nSUMMARY:[${t.area}] ${t.title}\nDESCRIPTION:Prioridad de AURA OS\nEND:VEVENT\n`;
+            let icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//FIDIUM OS//SF//ES\n";
+            appState.projects.forEach(p => {
+                icsContent += `BEGIN:VEVENT\nSUMMARY:FIDIUM: ${p.title} (${p.client})\nDESCRIPTION:Proyecto legal activo\nEND:VEVENT\n`;
             });
             icsContent += "END:VCALENDAR";
 
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.setAttribute('download', 'aura_agenda.ics');
+            link.setAttribute('download', 'fidium_agenda.ics');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        function generateSiriShortcutHelp() {
-            alert("Para conectar con Siri:\n1. Abre la app 'Atajos' en tu iPhone.\n2. Crea un atajo que abra este enlace web.\n3. Nómbralo 'Oye Siri, abrir mi control de vida'.");
-        }
-
-        // Initialize
+        // Init
         updateDateDisplay();
         render();
     </script>
