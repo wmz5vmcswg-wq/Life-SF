@@ -48,6 +48,10 @@
             color: #F4F2ED;
             -webkit-tap-highlight-color: transparent;
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            padding-top: env(safe-area-inset-top);
         }
         .terminal-panel {
             background: rgba(13, 14, 16, 0.95);
@@ -79,45 +83,48 @@
         }
     </style>
 </head>
-<body class="h-screen flex flex-col justify-between overflow-hidden select-none">
+<body class="flex flex-col justify-between select-none">
 
-    <!-- TICKER SUPERIOR CON PROVERBIO DE ÁGUILAS -->
-    <div class="bg-carbon border-b border-graphite py-2 px-4 text-[11px] font-mono text-gold flex items-center justify-between shrink-0">
-        <div class="ticker-wrap flex-1">
-            <div class="ticker-move">
-                <span>🦅 "El águila vuela sola a gran altura y por encima de las tormentas; imítala para alcanzar el éxito supremo." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; ⚡ "Visualiza tu meta con precisión implacable, mantén la disciplina y ejecuta con la fuerza de un líder." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🎯 FALCÓN OS // FIDIUM • IMPEWEB • REYNO BOOTS</span>
+    <!-- CONTENEDOR SUPERIOR FIJO (TICKER + HEADER) PARA EVITAR DIFUMINADOS -->
+    <div class="w-full bg-carbon border-b border-graphite shrink-0 z-30">
+        <!-- TICKER SUPERIOR CON PROVERBIO DE ÁGUILAS -->
+        <div class="py-1.5 px-4 text-[11px] font-mono text-gold flex items-center justify-between border-b border-graphite/50">
+            <div class="ticker-wrap flex-1">
+                <div class="ticker-move">
+                    <span>🦅 "El águila vuela sola a gran altura y por encima de las tormentas; imítala para alcanzar el éxito supremo." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; ⚡ "Visualiza tu meta con precisión implacable, mantén la disciplina y ejecuta con la fuerza de un líder." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🎯 FALCÓN OS // FIDIUM • IMPEWEB • REYNO BOOTS</span>
+                </div>
             </div>
         </div>
+
+        <!-- HEADER EJECUTIVO -->
+        <header class="px-5 py-3 flex justify-between items-center bg-carbon">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs font-mono shadow-inner">
+                    SF
+                </div>
+                <div>
+                    <h1 class="text-xs font-bold font-mono tracking-wider text-warmWhite">FALCÓN OS</h1>
+                    <p class="text-[9px] text-gold font-mono uppercase">Executive Control</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="exportData()" title="Respaldar Datos" class="p-2 bg-graphite/50 border border-graphite text-subtle hover:text-gold rounded-xl transition active:scale-95">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                </button>
+                <button onclick="openModal()" class="px-3.5 py-1.5 bg-gold text-deep font-bold font-mono text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1 shadow-lg shadow-gold/20 active:scale-95">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> <span id="btn-modal-text">NUEVO</span>
+                </button>
+            </div>
+        </header>
     </div>
 
-    <!-- HEADER EJECUTIVO FIJO -->
-    <header class="px-5 py-3 border-b border-graphite bg-carbon/95 backdrop-blur-md flex justify-between items-center shrink-0 z-20">
-        <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs font-mono shadow-inner">
-                SF
-            </div>
-            <div>
-                <h1 class="text-xs font-bold font-mono tracking-wider text-warmWhite">FALCÓN OS</h1>
-                <p class="text-[9px] text-gold font-mono uppercase">Executive Control</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-2">
-            <button onclick="exportData()" title="Respaldar Datos" class="p-2 bg-graphite/50 border border-graphite text-subtle hover:text-gold rounded-xl transition active:scale-95">
-                <i data-lucide="download" class="w-4 h-4"></i>
-            </button>
-            <button onclick="openModal()" class="px-3.5 py-1.5 bg-gold text-deep font-bold font-mono text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1 shadow-lg shadow-gold/20 active:scale-95">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i> <span id="btn-modal-text">NUEVO</span>
-            </button>
-        </div>
-    </header>
-
     <!-- ÁREA DE CONTENIDO PRINCIPAL SCROLLABLE -->
-    <main id="main-content" class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+    <main id="main-content" class="flex-1 overflow-y-auto px-4 py-4 pb-28 space-y-4">
         <!-- Inyectado dinámicamente -->
     </main>
 
     <!-- NAVEGACIÓN INFERIOR FIJA -->
-    <nav class="bg-carbon border-t border-graphite px-6 py-3 flex justify-around items-center shrink-0 z-20">
+    <nav class="bg-carbon border-t border-graphite px-6 py-3 pb-6 flex justify-around items-center shrink-0 z-30 fixed bottom-0 left-0 right-0">
         <button onclick="switchView('ideas')" id="nav-ideas" class="flex flex-col items-center gap-1 text-gold transition">
             <i data-lucide="book-open" class="w-5 h-5"></i>
             <span class="text-[10px] font-mono font-medium">Ideas & Notas</span>
@@ -157,11 +164,11 @@
             ]
         };
 
-        let appState = JSON.parse(localStorage.getItem('falcon_os_pro_v1')) || defaultState;
+        let appState = JSON.parse(localStorage.getItem('falcon_os_pro_v3')) || defaultState;
         let activeChart = null;
 
         function saveState() {
-            localStorage.setItem('falcon_os_pro_v1', JSON.stringify(appState));
+            localStorage.setItem('falcon_os_pro_v3', JSON.stringify(appState));
             renderApp();
         }
 
@@ -171,7 +178,6 @@
             renderApp();
         }
 
-        // Sistema de colores corporativos
         function getCompanyBadge(company) {
             switch(company) {
                 case 'FIDIUM Legal': return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
@@ -216,278 +222,4 @@
                         </div>
                     </div>
 
-                    <div class="space-y-3">
-                        ${filteredIdeas.map(i => `
-                            <div class="terminal-panel p-4 rounded-2xl border border-graphite space-y-2.5 flex flex-col justify-between shadow-lg">
-                                <div class="space-y-1.5">
-                                    <div class="flex justify-between items-start gap-2">
-                                        <h4 class="text-sm font-bold text-warmWhite leading-snug">${i.title}</h4>
-                                        <span class="text-[9px] font-mono px-2 py-0.5 rounded-md bg-carbon border border-graphite text-subtle shrink-0">${i.date}</span>
-                                    </div>
-                                    <span class="text-[9px] font-mono px-2.5 py-0.5 rounded-lg border inline-block ${getCompanyBadge(i.category)}">${i.category}</span>
-                                    <p class="text-xs text-subtle leading-relaxed pt-1 font-sans">${i.content}</p>
-                                </div>
-                                <div class="flex justify-between items-center pt-2.5 border-t border-graphite">
-                                    <button onclick="copyToClipboard('${i.title}: ${i.content}')" class="text-subtle hover:text-gold text-[10px] flex items-center gap-1.5 font-mono transition">
-                                        <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar
-                                    </button>
-                                    <button onclick="deleteIdea(${i.id})" class="text-subtle hover:text-terminalRed p-1 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                const countPend = appState.projects.filter(p => p.status === 'Pendiente').length;
-                const countInit = appState.projects.filter(p => p.status === 'Iniciado' || p.status === 'En Proceso').length;
-                const countDone = appState.projects.filter(p => p.status === 'Concluido').length;
-
-                mainContent.innerHTML = `
-                    <div class="grid grid-cols-3 gap-2 font-mono text-center">
-                        <div class="terminal-panel p-3 rounded-2xl border border-graphite shadow-md">
-                            <span class="text-[8px] text-subtle uppercase block">Pendientes</span>
-                            <p class="text-base font-bold text-terminalRed mt-0.5">${countPend}</p>
-                        </div>
-                        <div class="terminal-panel p-3 rounded-2xl border border-graphite shadow-md">
-                            <span class="text-[8px] text-subtle uppercase block">En Curso</span>
-                            <p class="text-base font-bold text-gold mt-0.5">${countInit}</p>
-                        </div>
-                        <div class="terminal-panel p-3 rounded-2xl border border-graphite shadow-md">
-                            <span class="text-[8px] text-subtle uppercase block">Concluidos</span>
-                            <p class="text-base font-bold text-terminalGreen mt-0.5">${countDone}</p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-3 font-mono">
-                        <div class="relative">
-                            <i data-lucide="search" class="w-4 h-4 text-subtle absolute left-3.5 top-3"></i>
-                            <input type="text" value="${appState.searchQuery}" oninput="updateSearch(this.value)" placeholder="Buscar proyecto..." class="w-full bg-carbon border border-graphite rounded-xl pl-10 pr-3 py-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold shadow-inner">
-                        </div>
-                        <div class="flex gap-1.5 overflow-x-auto pb-1 text-[9px] hide-scrollbar">
-                            <button onclick="setCategoryFilter('ALL')" class="px-3 py-1.5 rounded-xl border shrink-0 transition ${appState.filterCategory === 'ALL' ? 'bg-gold text-deep font-bold border-gold shadow-md' : 'bg-carbon text-subtle border-graphite'}">TODOS</button>
-                            ${appState.companies.map(c => `
-                                <button onclick="setCategoryFilter('${c}')" class="px-3 py-1.5 rounded-xl border shrink-0 transition ${appState.filterCategory === c ? 'bg-gold text-deep font-bold border-gold shadow-md' : 'bg-carbon text-subtle border-graphite'}">${c}</button>
-                            `).join('')}
-                        </div>
-                    </div>
-
-                    <div class="terminal-panel p-4 rounded-2xl border border-graphite space-y-2 shadow-md">
-                        <div class="flex justify-between items-center font-mono text-[10px]">
-                            <span class="text-gold uppercase tracking-wider font-bold">// Pipeline Global</span>
-                            <span class="text-subtle">Gráfica Live</span>
-                        </div>
-                        <div class="h-36 relative">
-                            <canvas id="projectsBarChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="space-y-3">
-                        ${filteredProjects.map(p => `
-                            <div class="terminal-panel p-4 rounded-2xl border border-graphite flex justify-between items-center font-mono shadow-lg">
-                                <div class="space-y-1">
-                                    <h4 class="text-xs font-bold text-warmWhite">${p.title}</h4>
-                                    <span class="text-[9px] font-mono px-2 py-0.5 rounded-md border inline-block ${getCompanyBadge(p.client)}">${p.client}</span>
-                                    ${p.deadline ? `<p class="text-[9px] text-gold pt-0.5">Límite: ${p.deadline}</p>` : ''}
-                                </div>
-                                <div class="flex items-center gap-2.5">
-                                    <button onclick="cycleStatus(${p.id})" class="text-[9px] px-2.5 py-1 rounded-lg font-semibold border ${getStatusStyle(p.status)} active:scale-95 transition shadow-sm">
-                                        ${p.status}
-                                    </button>
-                                    <button onclick="deleteProject(${p.id})" class="text-subtle hover:text-terminalRed p-1 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-
-                setTimeout(() => renderProjectsBarChart(), 50);
-            }
-
-            lucide.createIcons();
-        }
-
-        function updateSearch(val) {
-            appState.searchQuery = val;
-            renderApp();
-        }
-
-        function setCategoryFilter(cat) {
-            appState.filterCategory = cat;
-            renderApp();
-        }
-
-        function cycleStatus(id) {
-            const proj = appState.projects.find(p => p.id === id);
-            if (!proj) return;
-
-            const order = ['Pendiente', 'Iniciado', 'En Proceso', 'En Pausa', 'Concluido'];
-            const nextIdx = (order.indexOf(proj.status) + 1) % order.length;
-            proj.status = order[nextIdx];
-            saveState();
-        }
-
-        function getStatusStyle(status) {
-            switch(status) {
-                case 'Pendiente': return 'bg-red-500/10 text-terminalRed border-red-500/30';
-                case 'Iniciado': return 'bg-blue-500/10 text-terminalBlue border-blue-500/30';
-                case 'En Proceso': return 'bg-yellow-500/10 text-gold border-yellow-500/30';
-                case 'En Pausa': return 'bg-gray-500/10 text-subtle border-gray-500/30';
-                case 'Concluido': return 'bg-emerald-500/10 text-terminalGreen border-emerald-500/30';
-                default: return 'bg-graphite text-subtle border-graphite';
-            }
-        }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('¡Copiado al portapapeles!');
-            });
-        }
-
-        function exportData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "falcon_os_backup.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        function renderProjectsBarChart() {
-            const ctx = document.getElementById('projectsBarChart');
-            if(!ctx) return;
-            if(activeChart) activeChart.destroy();
-
-            const statuses = ['Pendiente', 'Iniciado', 'En Proceso', 'En Pausa', 'Concluido'];
-            const counts = statuses.map(st => appState.projects.filter(p => p.status === st).length);
-
-            activeChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: statuses,
-                    datasets: [{
-                        label: 'Proyectos',
-                        data: counts,
-                        backgroundColor: ['#EF4444', '#3B82F6', '#C5A059', '#6B7280', '#10B981'],
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { ticks: { color: '#9CA3AF', font: { family: 'monospace', size: 9 } }, grid: { color: '#1C1E24' } },
-                        y: { ticks: { color: '#9CA3AF', font: { family: 'monospace', size: 9 }, stepSize: 1 }, grid: { color: '#1C1E24' } }
-                    }
-                }
-            });
-        }
-
-        function openModal() {
-            document.getElementById('modal-backdrop').classList.remove('hidden');
-            const titleEl = document.getElementById('modal-title');
-            const bodyEl = document.getElementById('modal-body');
-            const isIdeas = appState.activeView === 'ideas';
-
-            const companyOptions = appState.companies.map(c => `<option value="${c}">${c}</option>`).join('') + `<option value="ADD_NEW">+ Agregar nueva empresa / cliente...</option>`;
-
-            if (isIdeas) {
-                titleEl.innerText = '// NUEVA IDEA / APUNTE';
-                bodyEl.innerHTML = `
-                    <label class="text-[10px] text-subtle uppercase block">Título de la Idea</label>
-                    <input type="text" id="idea-title" placeholder="Ej: Nueva estrategia de marca..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
-                    
-                    <label class="text-[10px] text-subtle uppercase block">Categoría / Empresa</label>
-                    <select id="idea-cat" onchange="checkNewCompany(this)" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
-                        ${companyOptions}
-                    </select>
-
-                    <label class="text-[10px] text-subtle uppercase block">Detalles o Notas</label>
-                    <textarea id="idea-content" rows="3" placeholder="Escribe tu apunte aquí..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm"></textarea>
-
-                    <button onclick="saveIdea()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition shadow-md">GUARDAR APUNTE</button>
-                `;
-            } else {
-                titleEl.innerText = '// NUEVO PROYECTO';
-                bodyEl.innerHTML = `
-                    <label class="text-[10px] text-subtle uppercase block">Título del Proyecto</label>
-                    <input type="text" id="proj-title" placeholder="Ej: Registro corporativo..." class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
-                    
-                    <label class="text-[10px] text-subtle uppercase block">Empresa / Área Responsable</label>
-                    <select id="proj-client" onchange="checkNewCompany(this)" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
-                        ${companyOptions}
-                    </select>
-
-                    <label class="text-[10px] text-subtle uppercase block">Estatus de Avance</label>
-                    <select id="proj-status" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
-                        <option value="Pendiente">Pendiente (En Cola)</option>
-                        <option value="Iniciado">Iniciado (Fase Inicial)</option>
-                        <option value="En Proceso">En Proceso (Ejecución)</option>
-                        <option value="En Pausa">En Pausa (Detenido)</option>
-                        <option value="Concluido">Concluido (Finalizado)</option>
-                    </select>
-
-                    <label class="text-[10px] text-subtle uppercase block">Fecha Límite (Opcional)</label>
-                    <input type="date" id="proj-deadline" class="w-full bg-[#F4F2ED] text-black font-semibold border border-graphite rounded-xl p-3 text-xs focus:outline-none focus:border-gold mb-2 shadow-sm">
-
-                    <button onclick="saveProject()" class="w-full py-3 bg-gold text-deep font-bold font-mono text-xs rounded-xl mt-2 hover:bg-goldHover transition shadow-md">GUARDAR PROYECTO</button>
-                `;
-            }
-        }
-
-        function checkNewCompany(selectEl) {
-            if (selectEl.value === 'ADD_NEW') {
-                const newComp = prompt('Introduce el nombre de la nueva empresa o cliente:');
-                if (newComp && newComp.trim() !== '') {
-                    appState.companies.push(newComp.trim());
-                    saveState();
-                    openModal();
-                } else {
-                    selectEl.selectedIndex = 0;
-                }
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('modal-backdrop').classList.add('hidden');
-        }
-
-        function saveIdea() {
-            const title = document.getElementById('idea-title').value;
-            const category = document.getElementById('idea-cat').value;
-            const content = document.getElementById('idea-content').value;
-
-            if(!title) return;
-            const dateStr = new Date().toISOString().split('T')[0];
-            appState.ideas.push({ id: Date.now(), title, category, content: content || 'Sin detalles.', date: dateStr });
-            saveState();
-            closeModal();
-        }
-
-        function deleteIdea(id) {
-            appState.ideas = appState.ideas.filter(i => i.id !== id);
-            saveState();
-        }
-
-        function saveProject() {
-            const title = document.getElementById('proj-title').value;
-            const client = document.getElementById('proj-client').value;
-            const status = document.getElementById('proj-status').value;
-            const deadline = document.getElementById('proj-deadline').value;
-
-            if(!title) return;
-            appState.projects.push({ id: Date.now(), title, client, status, deadline });
-            saveState();
-            closeModal();
-        }
-
-        function deleteProject(id) {
-            appState.projects = appState.projects.filter(p => p.id !== id);
-            saveState();
-        }
-
-        renderApp();
-    </script>
-</body>
-</html>
+                    <div class="space-y-3
