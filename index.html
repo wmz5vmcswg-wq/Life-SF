@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>FALCÓN OS | Executive System</title>
+    <title>FALCÓN OS | Ideas y Proyectos</title>
     
     <!-- PWA & Apple Web App Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="FALCÓN OS">
-    <meta name="theme-color" content="#050507">
+    <meta name="theme-color" content="#090A0C">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,20 +19,16 @@
             theme: {
                 extend: {
                     colors: {
-                        carbon: '#0D0E10',
-                        deep: '#050507',
-                        graphite: '#1C1E24',
+                        carbon: '#111214',
+                        deep: '#090A0C',
+                        graphite: '#202226',
                         warmWhite: '#F4F2ED',
-                        gold: '#C5A059',
-                        goldHover: '#B08D4C',
-                        terminalGreen: '#10B981',
-                        terminalBlue: '#3B82F6',
-                        terminalRed: '#EF4444',
-                        subtle: '#9CA3AF'
+                        gold: '#B99A62',
+                        goldHover: '#A68754',
+                        subtle: '#A1A1AA'
                     },
                     fontFamily: {
-                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'sans-serif'],
-                        mono: ['"SF Mono"', Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace]
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'sans-serif']
                     }
                 }
             }
@@ -40,39 +36,23 @@
     </script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            background-color: #050507;
+            background-color: #090A0C;
             color: #F4F2ED;
             -webkit-tap-highlight-color: transparent;
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+            /* Espacio seguro superior obligatorio para la isla dinámica del iPhone 16 Pro */
+            padding-top: env(safe-area-inset-top);
             height: 100vh;
             height: 100dvh;
             overflow: hidden;
-            padding-top: env(safe-area-inset-top);
         }
-        .terminal-panel {
-            background: rgba(13, 14, 16, 0.95);
+        .glass-panel {
+            background: rgba(17, 18, 20, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-        }
-        .ticker-wrap {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .ticker-move {
-            display: inline-block;
-            white-space: nowrap;
-            padding-left: 100%;
-            animation: ticker 35s linear infinite;
-        }
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
+            border: 1px solid rgba(185, 154, 98, 0.15);
         }
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
@@ -85,141 +65,197 @@
 </head>
 <body class="flex flex-col justify-between select-none">
 
-    <!-- CONTENEDOR SUPERIOR FIJO (TICKER + HEADER) PARA EVITAR DIFUMINADOS -->
-    <div class="w-full bg-carbon border-b border-graphite shrink-0 z-30">
-        <!-- TICKER SUPERIOR CON PROVERBIO DE ÁGUILAS -->
-        <div class="py-1.5 px-4 text-[11px] font-mono text-gold flex items-center justify-between border-b border-graphite/50">
-            <div class="ticker-wrap flex-1">
-                <div class="ticker-move">
-                    <span>🦅 "El águila vuela sola a gran altura y por encima de las tormentas; imítala para alcanzar el éxito supremo." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; ⚡ "Visualiza tu meta con precisión implacable, mantén la disciplina y ejecuta con la fuerza de un líder." &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🎯 FALCÓN OS // FIDIUM • IMPEWEB • REYNO BOOTS</span>
-                </div>
+    <!-- HEADER SUPERIOR SÓLIDO (PROTEGIDO CONTRA DIFUMINADOS EN LA ISLA DINÁMICA) -->
+    <header class="h-16 border-b border-graphite bg-carbon px-6 flex items-center justify-between z-20 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-bold text-xs shadow-lg shadow-gold/10">
+                F
+            </div>
+            <div>
+                <h1 id="header-title" class="text-xs font-bold uppercase tracking-widest text-gold">Banco de Ideas</h1>
+                <span class="text-[9px] text-subtle tracking-wider uppercase block">FALCÓN OS</span>
             </div>
         </div>
 
-        <!-- HEADER EJECUTIVO -->
-        <header class="px-5 py-3 flex justify-between items-center bg-carbon">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl bg-gold/10 border border-gold/40 flex items-center justify-center text-gold font-bold text-xs font-mono shadow-inner">
-                    SF
-                </div>
-                <div>
-                    <h1 class="text-xs font-bold font-mono tracking-wider text-warmWhite">FALCÓN OS</h1>
-                    <p class="text-[9px] text-gold font-mono uppercase">Executive Control</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-2">
-                <button onclick="exportData()" title="Respaldar Datos" class="p-2 bg-graphite/50 border border-graphite text-subtle hover:text-gold rounded-xl transition active:scale-95">
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                </button>
-                <button onclick="openModal()" class="px-3.5 py-1.5 bg-gold text-deep font-bold font-mono text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1 shadow-lg shadow-gold/20 active:scale-95">
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> <span id="btn-modal-text">NUEVO</span>
-                </button>
-            </div>
-        </header>
-    </div>
+        <div class="flex items-center gap-3">
+            <button onclick="openModal()" class="px-4 py-2 bg-gold text-deep font-bold text-xs rounded-xl hover:bg-goldHover transition flex items-center gap-1.5 shadow-lg shadow-gold/20 active:scale-95">
+                <i data-lucide="plus" class="w-4 h-4"></i> <span id="btn-modal-text">Nueva Idea</span>
+            </button>
+        </div>
+    </header>
 
-    <!-- ÁREA DE CONTENIDO PRINCIPAL SCROLLABLE -->
-    <main id="main-content" class="flex-1 overflow-y-auto px-4 py-4 pb-28 space-y-4">
-        <!-- Inyectado dinámicamente -->
+    <!-- ÁREA DE CONTENIDO DINÁMICO (CON ESPACIO INFERIOR PARA NO SER TAPADO) -->
+    <main id="main-content" class="flex-1 overflow-y-auto px-6 py-5 pb-32 space-y-4 hide-scrollbar">
+        <!-- Renderizado por JS -->
     </main>
 
-    <!-- NAVEGACIÓN INFERIOR FIJA -->
-    <nav class="bg-carbon border-t border-graphite px-6 py-3 pb-6 flex justify-around items-center shrink-0 z-30 fixed bottom-0 left-0 right-0">
-        <button onclick="switchView('ideas')" id="nav-ideas" class="flex flex-col items-center gap-1 text-gold transition">
-            <i data-lucide="book-open" class="w-5 h-5"></i>
-            <span class="text-[10px] font-mono font-medium">Ideas & Notas</span>
+    <!-- BARRA DE NAVEGACIÓN INFERIOR GRANDE Y ERGONÓMICA (TIPO APP NATIVA) -->
+    <nav class="bg-carbon border-t border-graphite px-8 py-3.5 pb-8 flex justify-around items-center shrink-0 z-30 fixed bottom-0 left-0 right-0 shadow-2xl">
+        <button onclick="switchView('ideas')" id="nav-ideas" class="flex flex-col items-center gap-1.5 py-1 px-6 rounded-2xl transition text-gold">
+            <i data-lucide="lightbulb" class="w-6 h-6"></i>
+            <span class="text-[11px] font-semibold tracking-wide">Banco de Ideas</span>
         </button>
-        <button onclick="switchView('projects')" id="nav-projects" class="flex flex-col items-center gap-1 text-subtle transition">
-            <i data-lucide="briefcase" class="w-5 h-5"></i>
-            <span class="text-[10px] font-mono font-medium">Proyectos</span>
+        <button onclick="switchView('projects')" id="nav-projects" class="flex flex-col items-center gap-1.5 py-1 px-6 rounded-2xl transition text-subtle hover:text-warmWhite">
+            <i data-lucide="briefcase" class="w-6 h-6"></i>
+            <span class="text-[11px] font-semibold tracking-wide">Gestor de Proyectos</span>
         </button>
     </nav>
 
-    <!-- MODAL GENERAL ESTILO TERMINAL -->
-    <div id="modal-backdrop" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="terminal-panel w-full sm:max-w-lg rounded-t-3xl sm:rounded-3xl p-6 border border-graphite space-y-4 shadow-2xl">
-            <div class="flex justify-between items-center border-b border-graphite pb-3">
-                <h3 id="modal-title" class="text-xs font-mono font-bold uppercase tracking-wider text-gold">// NUEVO REGISTRO</h3>
-                <button onclick="closeModal()" class="text-subtle hover:text-warmWhite p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <!-- MODAL GENERAL -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 border border-graphite space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 id="modal-title" class="text-sm font-bold uppercase tracking-wider text-warmWhite">Nuevo Registro</h3>
+                <button onclick="closeModal()" class="text-subtle hover:text-warmWhite"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div id="modal-body" class="space-y-3 font-mono">
+            <div id="modal-body" class="space-y-3">
                 <!-- Formulario dinámico -->
             </div>
         </div>
     </div>
 
-    <!-- MOTOR JAVASCRIPT PROFESIONAL -->
+    <!-- MOTOR JAVASCRIPT LOCAL -->
     <script>
         const defaultState = {
-            activeView: 'ideas',
-            searchQuery: '',
-            filterCategory: 'ALL',
-            companies: ['FIDIUM Legal', 'Impeweb Soluciones', 'Reyno Boots', 'Personal'],
+            activeView: 'ideas', // 'ideas' o 'projects'
             ideas: [
-                { id: 1, title: 'Estructura corporativa transfronteriza', category: 'FIDIUM Legal', content: 'Plantilla de contratos internacionales para clientes en México y Chile.', date: '2026-11-06' }
+                { id: 1, name: 'Plataforma automatizada de contratos transfronterizos MX-CL', category: 'Legal Tech', potential: '$150,000 MXN', status: 'En evaluación' }
             ],
             projects: [
-                { id: 1, title: 'Registro Marcas INAPI / IMPI', client: 'FIDIUM Legal', status: 'En Proceso', deadline: '2026-12-15' },
-                { id: 2, title: 'Distribución de Calzado USA', client: 'Reyno Boots', status: 'Iniciado', deadline: '2026-12-30' }
+                { id: 1, title: 'Registro Marcas INAPI/IMPI', client: 'FIDIUM Direct', budget: '$25,000 MXN', status: 'Activo' }
             ]
         };
 
-        let appState = JSON.parse(localStorage.getItem('falcon_os_pro_v3')) || defaultState;
-        let activeChart = null;
+        let appState = JSON.parse(localStorage.getItem('falcon_ideas_projects_v2')) || defaultState;
 
         function saveState() {
-            localStorage.setItem('falcon_os_pro_v3', JSON.stringify(appState));
+            localStorage.setItem('falcon_ideas_projects_v2', JSON.stringify(appState));
             renderApp();
         }
 
         function switchView(view) {
             appState.activeView = view;
-            appState.searchQuery = '';
             renderApp();
-        }
-
-        function getCompanyBadge(company) {
-            switch(company) {
-                case 'FIDIUM Legal': return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
-                case 'Impeweb Soluciones': return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
-                case 'Reyno Boots': return 'bg-orange-500/10 text-orange-400 border-orange-500/30';
-                case 'Personal': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
-                default: return 'bg-gold/10 text-gold border-gold/30';
-            }
         }
 
         function renderApp() {
             const isIdeas = appState.activeView === 'ideas';
             
-            document.getElementById('nav-ideas').className = `flex flex-col items-center gap-1 transition ${isIdeas ? 'text-gold' : 'text-subtle'}`;
-            document.getElementById('nav-projects').className = `flex flex-col items-center gap-1 transition ${!isIdeas ? 'text-gold' : 'text-subtle'}`;
-            document.getElementById('btn-modal-text').innerText = isIdeas ? 'NUEVA IDEA' : 'PROYECTO';
+            // Estilos mejorados para los botones inferiores grandes
+            document.getElementById('nav-ideas').className = `flex flex-col items-center gap-1.5 py-1.5 px-6 rounded-2xl transition ${isIdeas ? 'text-gold bg-graphite/60 border border-gold/30 shadow-md' : 'text-subtle hover:text-warmWhite'}`;
+            document.getElementById('nav-projects').className = `flex flex-col items-center gap-1.5 py-1.5 px-6 rounded-2xl transition ${!isIdeas ? 'text-gold bg-graphite/60 border border-gold/30 shadow-md' : 'text-subtle hover:text-warmWhite'}`;
+
+            document.getElementById('header-title').innerText = isIdeas ? 'Banco de Ideas' : 'Gestor de Proyectos';
+            document.getElementById('btn-modal-text').innerText = isIdeas ? 'Nueva Idea' : 'Nuevo Proyecto';
 
             const mainContent = document.getElementById('main-content');
 
-            const query = appState.searchQuery.toLowerCase();
-            const filteredIdeas = appState.ideas.filter(i => 
-                (appState.filterCategory === 'ALL' || i.category === appState.filterCategory) &&
-                (i.title.toLowerCase().includes(query) || i.content.toLowerCase().includes(query))
-            );
-            const filteredProjects = appState.projects.filter(p => 
-                (appState.filterCategory === 'ALL' || p.client === appState.filterCategory) &&
-                (p.title.toLowerCase().includes(query))
-            );
-
             if (isIdeas) {
                 mainContent.innerHTML = `
-                    <div class="space-y-3 font-mono">
-                        <div class="relative">
-                            <i data-lucide="search" class="w-4 h-4 text-subtle absolute left-3.5 top-3"></i>
-                            <input type="text" value="${appState.searchQuery}" oninput="updateSearch(this.value)" placeholder="Buscar idea o nota..." class="w-full bg-carbon border border-graphite rounded-xl pl-10 pr-3 py-2.5 text-xs text-warmWhite focus:outline-none focus:border-gold shadow-inner">
-                        </div>
-                        <div class="flex gap-1.5 overflow-x-auto pb-1 text-[9px] hide-scrollbar">
-                            <button onclick="setCategoryFilter('ALL')" class="px-3 py-1.5 rounded-xl border shrink-0 transition ${appState.filterCategory === 'ALL' ? 'bg-gold text-deep font-bold border-gold shadow-md' : 'bg-carbon text-subtle border-graphite'}">TODOS</button>
-                            ${appState.companies.map(c => `
-                                <button onclick="setCategoryFilter('${c}')" class="px-3 py-1.5 rounded-xl border shrink-0 transition ${appState.filterCategory === c ? 'bg-gold text-deep font-bold border-gold shadow-md' : 'bg-carbon text-subtle border-graphite'}">${c}</button>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${appState.ideas.map(i => `
+                                <div class="glass-panel p-5 rounded-2xl border border-graphite space-y-3 flex flex-col justify-between">
+                                    <div class="space-y-1">
+                                        <div class="flex justify-between items-start">
+                                            <h4 class="text-sm font-bold text-warmWhite">${i.name}</h4>
+                                            <span class="text-[10px] px-2 py-0.5 rounded bg-gold/10 text-gold border border-gold/20">${i.status}</span>
+                                        </div>
+                                        <p class="text-xs text-subtle">Categoría: ${i.category}</p>
+                                    </div>
+                                    <div class="flex justify-between items-center pt-3 border-t border-graphite">
+                                        <span class="text-xs text-gold font-semibold">Potencial: ${i.potential}</span>
+                                        <button onclick="deleteIdea(${i.id})" class="text-subtle hover:text-red-400 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                    </div>
+                                </div>
                             `).join('')}
                         </div>
                     </div>
+                `;
+            } else {
+                mainContent.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="space-y-3">
+                            ${appState.projects.map(p => `
+                                <div class="glass-panel p-5 rounded-2xl border border-graphite flex justify-between items-center">
+                                    <div class="space-y-1">
+                                        <h4 class="text-sm font-bold text-warmWhite">${p.title}</h4>
+                                        <p class="text-xs text-subtle">Cliente / Área: ${p.client} • Presupuesto: <span class="text-gold font-semibold">${p.budget}</span></p>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20">${p.status}</span>
+                                        <button onclick="deleteProject(${p.id})" class="text-subtle hover:text-red-400 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
 
-                    <div class="space-y-3
+            lucide.createIcons();
+        }
+
+        function openModal() {
+            document.getElementById('modal-backdrop').classList.remove('hidden');
+            const titleEl = document.getElementById('modal-title');
+            const bodyEl = document.getElementById('modal-body');
+            const isIdeas = appState.activeView === 'ideas';
+
+            if (isIdeas) {
+                titleEl.innerText = 'Registrar Nueva Idea';
+                bodyEl.innerHTML = `
+                    <input type="text" id="idea-name" placeholder="Nombre de la idea..." class="w-full bg-carbon border border-graphite rounded-xl p-3 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="idea-cat" placeholder="Categoría (Ej: Legal Tech)..." class="w-full bg-carbon border border-graphite rounded-xl p-3 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="idea-pot" placeholder="Potencial económico (Ej: $50,000 MXN)..." class="w-full bg-carbon border border-graphite rounded-xl p-3 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <button onclick="saveIdea()" class="w-full py-3 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Idea</button>
+                `;
+            } else {
+                titleEl.innerText = 'Registrar Nuevo Proyecto';
+                bodyEl.innerHTML = `
+                    <input type="text" id="proj-title" placeholder="Título del proyecto..." class="w-full bg-carbon border border-graphite rounded-xl p-3 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="proj-client" placeholder="Cliente o área asociada..." class="w-full bg-carbon border border-graphite rounded-xl p-3 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <input type="text" id="proj-budget" placeholder="Presupuesto proyectado..." class="w-full bg-carbon border border-graphite rounded-xl p-3 text-xs text-warmWhite focus:outline-none focus:border-gold">
+                    <button onclick="saveProject()" class="w-full py-3 bg-gold text-deep font-bold text-xs rounded-xl mt-2">Guardar Proyecto</button>
+                `;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal-backdrop').classList.add('hidden');
+        }
+
+        function saveIdea() {
+            const name = document.getElementById('idea-name').value;
+            const category = document.getElementById('idea-cat').value;
+            const potential = document.getElementById('idea-pot').value;
+            if(!name) return;
+            appState.ideas.push({ id: Date.now(), name, category: category || 'General', potential: potential || '$0 MXN', status: 'Nueva' });
+            saveState();
+            closeModal();
+        }
+
+        function deleteIdea(id) {
+            appState.ideas = appState.ideas.filter(i => i.id !== id);
+            saveState();
+        }
+
+        function saveProject() {
+            const title = document.getElementById('proj-title').value;
+            const client = document.getElementById('proj-client').value;
+            const budget = document.getElementById('proj-budget').value;
+            if(!title) return;
+            appState.projects.push({ id: Date.now(), title, client: client || 'General', budget: budget || '$0 MXN', status: 'Activo' });
+            saveState();
+            closeModal();
+        }
+
+        function deleteProject(id) {
+            appState.projects = appState.projects.filter(p => p.id !== id);
+            saveState();
+        }
+
+        renderApp();
+    </script>
+</body>
+</html>
